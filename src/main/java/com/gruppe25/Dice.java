@@ -22,7 +22,7 @@ public class Dice {
   }
 
   public int getDie(int dieNumber) {
-    return dice.get(dieNumber+1).getValue();
+    return dice.get(dieNumber-1).getValue();
   }
 
 }
