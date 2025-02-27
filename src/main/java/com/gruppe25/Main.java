@@ -9,7 +9,7 @@ public class Main {
         boardgame.addPlayer(new Player("Bot 2"));
         boardgame.addPlayer(new Player("Bot 3"));
 
-        boardgame.createBoard(100);
+        boardgame.createBoard(100);//the basic board should be 90 tiles
         boardgame.createDice(2);
 
         boardgame.play();

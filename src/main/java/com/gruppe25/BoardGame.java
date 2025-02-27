@@ -52,6 +52,7 @@ public class BoardGame {
     System.out.println("The winner is: " + getWinner().getName());
   }
 
+  //need to rewrite to accomodate different boards
   public Player getWinner() {
     if (currentPlayer.getCurrentTile().getTileID() > 100) {
       return currentPlayer;
