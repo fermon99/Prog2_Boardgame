@@ -13,10 +13,8 @@ public class Player {
   }
 
   public void move(int steps) {
-    for (int i = 0; i < steps; i++) {
-      currentTile = currentTile.getNextTile();
-    }
-  }
+    
+  } 
 
   public String getName() {
     return name;

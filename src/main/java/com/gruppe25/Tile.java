@@ -18,7 +18,7 @@ public class Tile {
   }
 
   public void setNextTile(Tile nextTile) {
-
+    this.nextTile = nextTile;
   }
 
   public Tile getNextTile() {
@@ -27,5 +27,10 @@ public class Tile {
 
   public int getTileID() {
     return tileID;
+  }
+
+  @Override
+  public String toString() {
+    return  "" + tileID;
   }
 }

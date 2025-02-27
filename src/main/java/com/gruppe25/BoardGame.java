@@ -20,7 +20,7 @@ public class BoardGame {
   public void createBoard(int numberOfTiles) {
     board = new Board();
     for (int i = 0; i < numberOfTiles; i++) {
-        Tile tile = new Tile(i);
+        Tile tile = new Tile(i+1);
         board.addTiles(tile);
     }
   }
@@ -38,13 +38,14 @@ public class BoardGame {
     currentPlayer = players.get(0);
 
     for (Player player : players) {
-      player.placeOnTile(board.getTile(0));
+      player.placeOnTile(board.getTile(1));
     } 
 
     while (getWinner() == null) {
       for (Player player : players) {
         currentPlayer = player;
         int steps = dice.roll();
+        currentPlayer.placeOnTile(board.getTile(currentPlayer.getCurrentTile().getTileID()+steps));
         System.out.println(currentPlayer.getName() + " landed on tile " + currentPlayer.getCurrentTile());
       }
       System.out.println("______________________________");
@@ -53,7 +54,7 @@ public class BoardGame {
   }
 
   public Player getWinner() {
-    if (currentPlayer.getCurrentTile().getTileID() > 100) {
+    if (currentPlayer.getCurrentTile().getTileID() == 100) {
       return currentPlayer;
     } else {
       return null;
