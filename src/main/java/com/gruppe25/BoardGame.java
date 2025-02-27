@@ -45,10 +45,6 @@ public class BoardGame {
       for (Player player : players) {
         currentPlayer = player;
         int steps = dice.roll();
-        Tile nextTile = board.getTile(currentPlayer.getCurrentTile().getTileID() + steps);
-        currentPlayer.placeOnTile(nextTile);
-        // currentPlayer.move(steps);
-        // currentPlayer.getCurrentTile().landPlayer(currentPlayer);
         System.out.println(currentPlayer.getName() + " landed on tile " + currentPlayer.getCurrentTile());
       }
       System.out.println("______________________________");
