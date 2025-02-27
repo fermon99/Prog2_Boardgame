@@ -28,4 +28,9 @@ public class Tile {
   public int getTileID() {
     return tileID;
   }
+
+  @Override
+  public String toString() {
+    return  "" + tileID;
+  }
 }

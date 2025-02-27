@@ -45,6 +45,7 @@ public class BoardGame {
       for (Player player : players) {
         currentPlayer = player;
         int steps = dice.roll();
+        currentPlayer.placeOnTile(board.getTile(currentPlayer.getCurrentTile().getTileID()+steps));
         System.out.println(currentPlayer.getName() + " landed on tile " + currentPlayer.getCurrentTile());
       }
       System.out.println("______________________________");
@@ -54,7 +55,7 @@ public class BoardGame {
 
   //need to rewrite to accomodate different boards
   public Player getWinner() {
-    if (currentPlayer.getCurrentTile().getTileID() > 100) {
+    if (currentPlayer.getCurrentTile().getTileID() == 100) {
       return currentPlayer;
     } else {
       return null;
