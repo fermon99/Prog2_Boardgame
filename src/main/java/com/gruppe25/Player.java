@@ -19,7 +19,7 @@ public class Player {
       }
       currentTile = currentTile.getNextTile();
     }
-    
+    //currentTile.landPlayer(this);
     
   }
 

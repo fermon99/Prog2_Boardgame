@@ -18,7 +18,9 @@ public class BoardGame {
   }
 
   public void createBoard(int numberOfTiles) {
-    board = new Board();
+    board = new Board(); // Creating board
+
+    // Add tiles and connecting them
     for (int i = 0; i < numberOfTiles+1; i++) {
         Tile tile = new Tile(i);
         board.addTiles(tile);
@@ -27,6 +29,21 @@ public class BoardGame {
       Tile next = board.getTile(i+1);
       current.setNextTile(next);
     }
+
+    // Add ladders
+    board.addSnakeLadder(board.getTile(2), board.getTile(40));
+    board.addSnakeLadder(board.getTile(8), board.getTile(16));
+    board.addSnakeLadder(board.getTile(36), board.getTile(52));
+    board.addSnakeLadder(board.getTile(47), board.getTile(66));
+    board.addSnakeLadder(board.getTile(68), board.getTile(86));
+
+    // Add snakes
+    board.addSnakeLadder(board.getTile(24), board.getTile(5));
+    board.addSnakeLadder(board.getTile(33), board.getTile(3));
+    board.addSnakeLadder(board.getTile(53), board.getTile(41));
+    board.addSnakeLadder(board.getTile(64), board.getTile(27));
+    board.addSnakeLadder(board.getTile(88), board.getTile(70));
+
   }
 
   public void createDice(int numberOfDice) {
@@ -51,6 +68,14 @@ public class BoardGame {
         int steps = dice.roll();
         player.move(steps);
         System.out.println(currentPlayer.getName() + " landed on tile " + currentPlayer.getCurrentTile());
+
+        // Check if player landed on action tile
+        Tile landedOn = currentPlayer.getCurrentTile();
+        if (board.getSnakeLadders().containsKey(landedOn)) {
+          Tile newTile = board.getSnakeLadders().get(landedOn);
+          currentPlayer.placeOnTile(board.getTile(newTile.getTileID()));
+          System.out.println(" | This is a ladder or snake! New position is on tile " + newTile.getTileID() + "!");
+        }
       }
       System.out.println("______________________________");
     }
