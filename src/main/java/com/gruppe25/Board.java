@@ -18,4 +18,8 @@ public class Board {
     return tiles.get(tileID);
   }
 
+  public int getBoardSize() {
+    return tiles.size();
+  }
+
 }

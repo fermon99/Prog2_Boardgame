@@ -19,9 +19,13 @@ public class BoardGame {
 
   public void createBoard(int numberOfTiles) {
     board = new Board();
-    for (int i = 0; i < numberOfTiles; i++) {
+    for (int i = 0; i < numberOfTiles+1; i++) {
         Tile tile = new Tile(i);
         board.addTiles(tile);
+    } for (int i = 0; i <numberOfTiles; i++) {
+      Tile current = board.getTile(i);
+      Tile next = board.getTile(i+1);
+      current.setNextTile(next);
     }
   }
 
@@ -38,14 +42,14 @@ public class BoardGame {
     currentPlayer = players.get(0);
 
     for (Player player : players) {
-      player.placeOnTile(board.getTile(0));
+      player.placeOnTile(board.getTile(50));
     } 
 
     while (getWinner() == null) {
       for (Player player : players) {
         currentPlayer = player;
         int steps = dice.roll();
-        currentPlayer.placeOnTile(board.getTile(currentPlayer.getCurrentTile().getTileID()+steps));
+        player.move(steps);
         System.out.println(currentPlayer.getName() + " landed on tile " + currentPlayer.getCurrentTile());
       }
       System.out.println("______________________________");
@@ -53,13 +57,13 @@ public class BoardGame {
     System.out.println("The winner is: " + getWinner().getName());
   }
 
-  //need to rewrite to accomodate different boards
   public Player getWinner() {
-    if (currentPlayer.getCurrentTile().getTileID() == 100) {
-      return currentPlayer;
-    } else {
-      return null;
+    for (Player player : players) {
+      if (player.getCurrentTile().getTileID() == board.getBoardSize() - 1) {
+          return player;
+      }
     }
+    return null;  
   }
 
 }
