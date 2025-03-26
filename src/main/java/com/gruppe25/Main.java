@@ -3,6 +3,8 @@ package com.gruppe25;
 public class Main {
     public static void main(String[] args) {
         BoardGameApp runBoard = new BoardGameApp();
-        runBoard.startGame(); 
+
+        String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+        runBoard.startGame(playerFileName); 
     }
 }
