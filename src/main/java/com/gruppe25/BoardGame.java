@@ -59,7 +59,7 @@ public class BoardGame {
     currentPlayer = players.get(0);
 
     for (Player player : players) {
-      player.placeOnTile(board.getTile(50));
+      player.placeOnTile(board.getTile(0));
     } 
 
     while (getWinner() == null) {
