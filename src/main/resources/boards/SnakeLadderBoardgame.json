@@ -1,0 +1,61 @@
+{
+  "BoardgameName": "Snakes and Ladders",
+  "Description": "A classic Snakes and Ladders boardgame with five ladders and five snakes",
+  "numberOfTiles": 90,
+  "loopableBoard": "true",
+  "numberOfDice": 2,
+  "actionTiles": [
+    {
+      "tileId": 24,
+      "actionType": "Snake"
+    },
+    {
+      "tileId": 33,
+      "actionType": "Snake"
+    }
+  ],
+  "snakes": [
+    {
+      "startTile": 24,
+      "endTile": 5
+    },
+    {
+      "startTile": 33,
+      "endTile": 3
+    },
+    {
+      "startTile": 53,
+      "endTile": 41
+    },
+    {
+      "startTile": 64,
+      "endTile": 27
+    },
+    {
+      "startTile": 88,
+      "endTile": 70
+    }
+  ],
+  "ladders": [
+    {
+      "startTile": 2,
+      "endTile": 40
+    },
+    {
+      "startTile": 8,
+      "endTile": 16
+    },
+    {
+      "startTile": 36,
+      "endTile": 52
+    },
+    {
+      "startTile": 47,
+      "endTile": 66
+    },
+    {
+      "startTile": 68,
+      "endTile": 86
+    }
+  ]
+}
