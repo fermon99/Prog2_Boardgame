@@ -1,8 +1,8 @@
 package com.gruppe25;
 
 public class SnakeAction implements TileAction {
-  private int destinationTileID; 
-  private String description;
+  private final int destinationTileID; 
+  private final String description;
 
   public SnakeAction(int destinationTileID, String description) {
     this.destinationTileID = destinationTileID;
@@ -11,7 +11,7 @@ public class SnakeAction implements TileAction {
 
   @Override
   public void perform(Player player) {
-    System.out.println("SnakeAction triggered: " + description);
+    System.out.println(description + "  |  SnakeAction triggered: ");
     player.placeOnTile(player.getBoardGame().getBoard().getTile(destinationTileID));
   }
 }

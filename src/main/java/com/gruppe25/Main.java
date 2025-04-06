@@ -5,6 +5,7 @@ public class Main {
         BoardGameApp runBoard = new BoardGameApp();
 
         String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-        runBoard.startGame(playerFileName); 
+        String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+        runBoard.startGame(playerFileName, boardFileName); 
     }
 }

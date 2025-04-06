@@ -1,8 +1,8 @@
 package com.gruppe25;
 
 public class LadderAction implements TileAction {
-  private int destinationTileID; 
-  private String description;
+  private final int destinationTileID; 
+  private final String description;
 
   public LadderAction(int destinationTileID, String description) {
     this.destinationTileID = destinationTileID;
@@ -11,7 +11,7 @@ public class LadderAction implements TileAction {
 
   @Override
   public void perform(Player player) {
-    System.out.println("LadderAction triggered: " + description);
+    System.out.println("  |  LadderAction triggered: " + description);
     player.placeOnTile(player.getBoardGame().getBoard().getTile(destinationTileID));
   }
 }

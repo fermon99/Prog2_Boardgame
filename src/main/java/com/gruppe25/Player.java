@@ -3,7 +3,7 @@ package com.gruppe25;
 public class Player {
   private final String name;
   private Tile currentTile;
-  private BoardGame boardGame;
+  private final BoardGame boardGame;
 
   public Player(String name, BoardGame boardGame) {
     this.name = name;

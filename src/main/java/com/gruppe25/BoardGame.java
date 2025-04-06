@@ -17,7 +17,11 @@ public class BoardGame {
     players.add(player);
   }
 
-  public void createBoard(int numberOfTiles) {
+  
+  public void createBoard(String filepath) {
+    board = BoardReader.loadBoard(filepath, this);
+    
+    /*
     board = new Board(); // Creating board
 
     // Add tiles and connecting them
@@ -43,12 +47,14 @@ public class BoardGame {
     board.addSnakeLadder(board.getTile(53), board.getTile(41));
     board.addSnakeLadder(board.getTile(64), board.getTile(27));
     board.addSnakeLadder(board.getTile(88), board.getTile(70));
-
+     */
   }
+  
 
   public void createDice(int numberOfDice) {
     dice = new Dice(numberOfDice);
   }
+  
 
   public void play() {
     if (players.isEmpty()) {
@@ -71,10 +77,10 @@ public class BoardGame {
 
         // Check if player landed on action tile
         Tile landedOn = currentPlayer.getCurrentTile();
-        if (board.getSnakeLadders().containsKey(landedOn)) {
-          Tile newTile = board.getSnakeLadders().get(landedOn);
-          currentPlayer.placeOnTile(board.getTile(newTile.getTileID()));
-          System.out.println(" | This is a ladder or snake! New position is on tile " + newTile.getTileID() + "!");
+        TileAction action = landedOn.getLandAction();
+        if (action != null) {
+          action.perform(currentPlayer);
+          // System.out.println(" | Action triggered! New position is on tile " + currentPlayer.getCurrentTile().getTileID() + "!");
         }
       }
       System.out.println("______________________________");

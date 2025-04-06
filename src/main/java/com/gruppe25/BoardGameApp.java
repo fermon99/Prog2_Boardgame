@@ -9,7 +9,7 @@ public class BoardGameApp {
 
   }
 
-  public void startGame(String playerFileName /*, String boardFileName */){
+  public void startGame(String playerFileName, String boardFileName){
     BoardGame boardgame = new BoardGame();
 
     /*boardgame.addPlayer(new Player("Filip"));
@@ -24,7 +24,7 @@ public class BoardGameApp {
       boardgame.addPlayer(player);
     }
 
-    boardgame.createBoard(90);
+    boardgame.createBoard(boardFileName);
     boardgame.createDice(2);
 
     boardgame.play();
