@@ -20,50 +20,70 @@
         "destinationTileId": 3,
         "description": "Snake from 24 to 5"
       }
-    }
-  ],
-  "snakes": [
-    {
-      "startTile": 24,
-      "endTile": 5
     },
     {
-      "startTile": 33,
-      "endTile": 3
+      "tileId": 53,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 41,
+        "description": "Snake from 53 to 41"
+      }
     },
     {
-      "startTile": 53,
-      "endTile": 41
+      "tileId": 64,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 27,
+        "description": "Snake from 64 to 27"
+      }
     },
     {
-      "startTile": 64,
-      "endTile": 27
+      "tileId": 88,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 70,
+        "description": "Snake from 88 to 70"
+      }
     },
     {
-      "startTile": 88,
-      "endTile": 70
-    }
-  ],
-  "ladders": [
-    {
-      "startTile": 2,
-      "endTile": 40
+      "tileId": 2,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 40,
+        "description": "Ladder from 2 to 40"
+      }
     },
     {
-      "startTile": 8,
-      "endTile": 16
+      "tileId": 8,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 16,
+        "description": "Ladder from 8 to 16"
+      }
     },
     {
-      "startTile": 36,
-      "endTile": 52
+      "tileId": 36,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 52,
+        "description": "Ladder from 36 to 52"
+      }
     },
     {
-      "startTile": 47,
-      "endTile": 66
+      "tileId": 47,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 66,
+        "description": "Ladder from 47 to 66"
+      }
     },
     {
-      "startTile": 68,
-      "endTile": 86
+      "tileId": 68,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 86,
+        "description": "Ladder from 68 to 86"
+      }
     }
   ]
 }

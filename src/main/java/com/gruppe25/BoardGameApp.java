@@ -18,7 +18,7 @@ public class BoardGameApp {
     boardgame.addPlayer(new Player("Bot 3"));*/
 
     /* Adding all players from file */
-    List<Player> players = readPlayersFromCSV(playerFileName);
+    List<Player> players = readPlayersFromCSV(playerFileName, boardgame);
     for (Player player : players) {
       System.out.println(player);
       boardgame.addPlayer(player);

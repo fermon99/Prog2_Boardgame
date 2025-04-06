@@ -9,7 +9,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class PlayerReader {
-  public static List<Player> readPlayersFromCSV(String filename) {
+  public static List<Player> readPlayersFromCSV(String filename, BoardGame boardGame) {
     List<Player> players = new ArrayList<>();
 
     try (CSVReader reader = new CSVReader(new FileReader(filename))) {
@@ -17,7 +17,7 @@ public class PlayerReader {
 
         while ((nextLine = reader.readNext()) != null) {
           String name = nextLine[0];
-          players.add(new Player(name));
+          players.add(new Player(name, boardGame));
         }
     } catch (IOException | NumberFormatException | CsvValidationException e) {
     } 

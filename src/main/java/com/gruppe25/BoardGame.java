@@ -91,4 +91,8 @@ public class BoardGame {
     return null;  
   }
 
+  public Board getBoard() {
+    return board;
+  }
+
 }
