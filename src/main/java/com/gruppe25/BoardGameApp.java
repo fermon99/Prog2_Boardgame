@@ -12,11 +12,6 @@ public class BoardGameApp {
   public void startGame(String playerFileName, String boardFileName){
     BoardGame boardgame = new BoardGame();
 
-    /*boardgame.addPlayer(new Player("Filip"));
-    boardgame.addPlayer(new Player("Bot 1"));
-    boardgame.addPlayer(new Player("Bot 2"));
-    boardgame.addPlayer(new Player("Bot 3"));*/
-
     /* Adding all players from file */
     List<Player> players = readPlayersFromCSV(playerFileName, boardgame);
     for (Player player : players) {
@@ -25,7 +20,7 @@ public class BoardGameApp {
     }
 
     boardgame.createBoard(boardFileName);
-    boardgame.createDice(2);
+    boardgame.createDice(boardFileName);
 
     boardgame.play();
   }

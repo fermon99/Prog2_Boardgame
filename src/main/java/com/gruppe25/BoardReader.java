@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonReader;
 
 public class BoardReader {
   private static Board board;
+  private static Dice dice;
 
   public static Board loadBoard(String filepath, BoardGame boardGame) {
     try {
@@ -48,6 +49,21 @@ public class BoardReader {
       System.out.println("Error - something happened when loading in .json");
       e.printStackTrace();
       return board;
+    }
+  }
+
+  public static Dice loadDice(String filepath, BoardGame boardGame) {
+    try {
+      Gson gson = new Gson();
+      JsonReader reader = new JsonReader(new FileReader(filepath));
+      BoardData boardData = gson.fromJson(reader, BoardData.class);
+
+      dice = new Dice(boardData.numberOfDice);
+      return dice;
+    } catch (Exception e) {
+      System.out.println("Error - something happened when loading in .json");
+      e.printStackTrace();
+      return dice;
     }
   }
 }

@@ -23,8 +23,8 @@ public class BoardGame {
   }
   
 
-  public void createDice(int numberOfDice) {
-    dice = new Dice(numberOfDice);
+  public void createDice(String filepath) {
+    dice = BoardReader.loadDice(filepath, this);
   }
   
 
