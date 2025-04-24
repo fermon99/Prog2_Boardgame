@@ -32,4 +32,8 @@ public class Board {
     return tiles.size();
   }
 
+  public Map<Integer, Tile> getTiles() {
+    return tiles;
+  }
+
 }

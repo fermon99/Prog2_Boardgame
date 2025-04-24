@@ -14,4 +14,8 @@ public class LadderAction implements TileAction {
     System.out.println("  |  LadderAction triggered: " + description);
     player.placeOnTile(player.getBoardGame().getBoard().getTile(destinationTileID));
   }
+
+  public int getDestinationTileID() {
+    return destinationTileID;
+  }
 }

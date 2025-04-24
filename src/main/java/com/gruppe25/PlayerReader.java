@@ -18,6 +18,7 @@ public class PlayerReader {
         while ((nextLine = reader.readNext()) != null) {
           String name = nextLine[0];
           players.add(new Player(name, boardGame));
+          // Legg inn maks 4 logikk
         }
     } catch (IOException | NumberFormatException | CsvValidationException e) {
     } 

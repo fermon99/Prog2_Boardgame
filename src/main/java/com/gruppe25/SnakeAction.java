@@ -14,4 +14,8 @@ public class SnakeAction implements TileAction {
     System.out.println(description + "  |  SnakeAction triggered: ");
     player.placeOnTile(player.getBoardGame().getBoard().getTile(destinationTileID));
   }
+
+  public int getDestinationTileID() {
+    return destinationTileID;
+  }
 }
