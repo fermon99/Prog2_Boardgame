@@ -1,6 +1,9 @@
 package com.gruppe25.GUIs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.gruppe25.Controllers.SnakeLadderController;
 import com.gruppe25.ModelClasses.Board;
@@ -14,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -25,6 +27,11 @@ public class SnakeLadderGUI {
 
   private SnakeLadderController controller;
   private ListView<Player> activePlayerListView;
+
+  private Map<Integer, StackPane> tilePanes = new HashMap<>();
+  private List<Player> players;
+  private BoardGame boardgame;
+  private int currentPlayerIndex;
 
   public SnakeLadderGUI() {
     controller = new SnakeLadderController(this);
@@ -38,6 +45,9 @@ public class SnakeLadderGUI {
       /* Create board */
       BoardGame boardgame = new BoardGame();
       boardgame.createBoard(boardFileName);
+
+      /* Create dice */
+      boardgame.createDice(boardFileName);
 
       Board board = boardgame.getBoard();
       List<Player> players = PlayerReader.readPlayersFromCSV(playerFileName, boardgame);
@@ -53,8 +63,6 @@ public class SnakeLadderGUI {
 
       Label activePlayersLabel = new Label("Active players");
       activePlayerListView = new ListView<>();
-      activePlayerListView.getItems().addAll(players);
-      activePlayerListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
       sideBar.getChildren().addAll(new Label("Controls"),
                                    newGameButton, 
@@ -91,6 +99,8 @@ public class SnakeLadderGUI {
         tilePane.setPrefSize(tileSize, tileSize);
         tilePane.setStyle("-fx-border-color: black; -fx-background-color: white;");
 
+        tilePanes.put(tileID, tilePane);
+
         if (tileID == 0) {
           Label startLabel = new Label("Start");
           tilePane.getChildren().add(startLabel);
@@ -122,12 +132,19 @@ public class SnakeLadderGUI {
       root.setCenter(scrollPane);
 
       /* Players */
-  
+      ArrayList<String> playerColors = new ArrayList<>();
+      playerColors.add("red");
+      playerColors.add("blue");
+      playerColors.add("yellow");
+      playerColors.add("green");
 
       /* Dice */
 
       /* New game button */
       newGameButton.setOnAction(e -> controller.handleNewGame(playerFileName, boardgame));
+
+      /* Roll dice button */
+      rollDiceButton.setOnAction(e -> controller.handleRollDice());
       
       /* Back button */
       backButton.setOnAction(e -> controller.handleBackButton());
@@ -140,5 +157,26 @@ public class SnakeLadderGUI {
 
     public void updatePlayerList(List<Player> players) {
       activePlayerListView.getItems().setAll(players);
+    }
+
+    public void updatePlayerPositions(List<Player> players) {
+      for (StackPane pane : tilePanes.values()) {
+        if (pane.getChildren().size() > 1) {
+          pane.getChildren().remove(1, pane.getChildren().size());
+        }
+      }
+
+      /* Add players to tiles */
+      for (Player player : players) {
+        Tile tile = player.getCurrentTile();
+        if (tile != null) {
+          StackPane pane = tilePanes.get(tile.getTileID());
+          if (pane != null) {
+            Label playerLabel = new Label(player.getName());
+            playerLabel.setStyle("-fx-font-size:10px; -fx-text-fill:blue;");
+            pane.getChildren().add(playerLabel);
+          }
+        }
+      }
     }
 }

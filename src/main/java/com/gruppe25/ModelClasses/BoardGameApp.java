@@ -1,8 +1,8 @@
 package com.gruppe25.ModelClasses;
 
-import static com.gruppe25.ModelClasses.PlayerReader.readPlayersFromCSV;
-
 import java.util.List;
+
+import static com.gruppe25.ModelClasses.PlayerReader.readPlayersFromCSV;
 
 public class BoardGameApp {
   String playerFileName;

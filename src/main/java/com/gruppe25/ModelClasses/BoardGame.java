@@ -78,4 +78,8 @@ public class BoardGame {
     return board;
   }
 
+  public Dice getDice() {
+    return dice;
+  }
+
 }
