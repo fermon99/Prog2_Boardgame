@@ -1,4 +1,4 @@
-package com.gruppe25;
+package com.gruppe25.ModelClasses;
 
 public class Player {
   private final String name;
@@ -35,6 +35,11 @@ public class Player {
 
   public BoardGame getBoardGame() {
     return boardGame;
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 
 }

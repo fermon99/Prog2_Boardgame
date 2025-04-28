@@ -1,4 +1,4 @@
-package com.gruppe25;
+package com.gruppe25.ModelClasses;
 
 import java.util.List;
 import java.util.Map;

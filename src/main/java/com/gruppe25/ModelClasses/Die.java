@@ -1,4 +1,4 @@
-package com.gruppe25;
+package com.gruppe25.ModelClasses;
 
 public class Die {
   private int lastRolledValue;

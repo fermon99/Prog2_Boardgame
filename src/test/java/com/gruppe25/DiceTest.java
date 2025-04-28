@@ -4,6 +4,8 @@ package com.gruppe25;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import com.gruppe25.ModelClasses.Dice;
+
 public class DiceTest {
   Dice dice = new Dice(2);
 

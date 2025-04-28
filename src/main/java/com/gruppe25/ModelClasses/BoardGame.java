@@ -1,4 +1,4 @@
-package com.gruppe25;
+package com.gruppe25.ModelClasses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,11 @@ public class BoardGame {
 
   public void createDice(String filepath) {
     dice = BoardReader.loadDice(filepath, this);
+  }
+
+  public void init(String filepath) {
+    createBoard(filepath);
+    createDice(filepath);
   }
   
 
