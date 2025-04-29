@@ -7,29 +7,35 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class GameGUI extends Application {
+
+  private static Stage mainStage;
   
   @Override
   public void start(Stage primaryStage) {
-    primaryStage.setTitle("Choose a boardgame");
+    mainStage = primaryStage;
+    mainMenu();
+  }
 
+  public static void mainMenu() {
     Button snakeLadderButton = new Button("Snakes and Ladders");
     Button trivialPursuitButton = new Button("Trivial Pursuit");
 
-    snakeLadderButton.setOnAction(e -> startGame("snakeLadder", primaryStage));
+    snakeLadderButton.setOnAction(e -> startGame("snakeLadder"));
 
     HBox hbox = new HBox(20, snakeLadderButton, trivialPursuitButton);
     hbox.setStyle("-fx-alignment:center");
 
     Scene selectionScene = new Scene(hbox, 1280, 720);
-    primaryStage.setScene(selectionScene);
-    primaryStage.show();
+    mainStage.setTitle("Choose a boardgame");
+    mainStage.setScene(selectionScene);
+    mainStage.show();
   }
 
-  private void startGame(String gameType, Stage stage) {
+  private static void startGame(String gameType) {
     switch(gameType) {
       case "snakeLadder":
         SnakeLadderGUI snakeLadderGUI = new SnakeLadderGUI();
-        stage.setScene(snakeLadderGUI.createScene());
+        mainStage.setScene(snakeLadderGUI.createScene());
         break;
       /* case "trivialPursuit":
         stage.setScene(TrivialPursuitGame.createScene());

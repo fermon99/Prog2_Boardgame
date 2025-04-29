@@ -2,8 +2,10 @@ package com.gruppe25.Controllers;
 
 import java.util.List;
 
+import com.gruppe25.GUIs.GameGUI;
 import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.SnakeLadderGUI;
+import com.gruppe25.GUIs.WinnerGUI;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Dice;
 import com.gruppe25.ModelClasses.Player;
@@ -18,12 +20,16 @@ public class SnakeLadderController {
   private SnakeLadderGUI gui;
   private int currentPlayerIndex;
 
+  /* File paths */
+  private String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+  private String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+
   public SnakeLadderController(SnakeLadderGUI gui) {
     this.gui = gui;
+    boardgame = new BoardGame();
   }
   
-  public void handleNewGame(String playerFileName, BoardGame boardgame) {
-    this.boardgame = boardgame;
+  public void handleNewGame() {
     List<Player> availablePlayers = PlayerReader.readPlayersFromCSV(playerFileName, boardgame);
     this.players = NewGameGUI.showAndWait(availablePlayers);
     this.currentPlayerIndex = 0;
@@ -47,11 +53,52 @@ public class SnakeLadderController {
     currentPlayer.getCurrentTile().landPlayer(currentPlayer);
     gui.updatePlayerPositions(players);
 
+    /* Win condition */
+    if (getWinner() != null) {
+      handleWin(getWinner());
+    }
+
     /* Next player index logic */
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
   }
   
   public void handleBackButton() {
+    GameGUI.mainMenu();
+  }
 
+  public void handleWin(Player winner) {
+    int choice = WinnerGUI.showAndWait(winner);
+    if (choice == 1) {
+      handleNewGame();
+    } else if (choice == 2) {
+      handleBackButton();
+    }
+  }
+
+  public Player getWinner() {
+    if (players == null) return null;
+
+    for (Player player : players) {
+      if (player.getCurrentTile().getTileID() == boardgame.getBoard().getBoardSize() - 1) {
+        return player;
+      }
+    }
+    return null;
+  }
+
+  public String getPlayerFile() {
+    return playerFileName;
+  }
+
+  public String getBoardFile() {
+    return boardFileName;
+  }
+
+  public BoardGame getBoardgame() {
+    return boardgame;
+  }
+
+  public List<Player> getPlayers() {
+    return players;
   }
 }

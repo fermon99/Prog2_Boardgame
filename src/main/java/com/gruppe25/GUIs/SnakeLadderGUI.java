@@ -9,7 +9,6 @@ import com.gruppe25.Controllers.SnakeLadderController;
 import com.gruppe25.ModelClasses.Board;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
-import com.gruppe25.ModelClasses.PlayerReader;
 import com.gruppe25.ModelClasses.Tile;
 
 import javafx.scene.Scene;
@@ -39,18 +38,18 @@ public class SnakeLadderGUI {
 
   public Scene createScene() {
       /* File paths */
-      String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-      String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+      String playerFileName = controller.getPlayerFile();
+      String boardFileName = controller.getBoardFile();
 
       /* Create board */
-      BoardGame boardgame = new BoardGame();
+      boardgame = controller.getBoardgame();
       boardgame.createBoard(boardFileName);
 
       /* Create dice */
       boardgame.createDice(boardFileName);
 
       Board board = boardgame.getBoard();
-      List<Player> players = PlayerReader.readPlayersFromCSV(playerFileName, boardgame);
+      players = controller.getPlayers();
 
       /* Sidebar */
       VBox sideBar = new VBox();
@@ -141,7 +140,7 @@ public class SnakeLadderGUI {
       /* Dice */
 
       /* New game button */
-      newGameButton.setOnAction(e -> controller.handleNewGame(playerFileName, boardgame));
+      newGameButton.setOnAction(e -> controller.handleNewGame());
 
       /* Roll dice button */
       rollDiceButton.setOnAction(e -> controller.handleRollDice());
@@ -160,6 +159,7 @@ public class SnakeLadderGUI {
     }
 
     public void updatePlayerPositions(List<Player> players) {
+      /* Removes player from previous position */
       for (StackPane pane : tilePanes.values()) {
         if (pane.getChildren().size() > 1) {
           pane.getChildren().remove(1, pane.getChildren().size());
