@@ -22,7 +22,8 @@ public class BoardReader {
       for (int i = 0; i < boardData.numberOfTiles+1; i++) {
           Tile tile = new Tile(i);
           board.addTiles(tile);
-      } for (int i = 0; i <boardData.numberOfTiles; i++) {
+      } 
+      for (int i = 0; i <boardData.numberOfTiles; i++) {
         Tile current = board.getTile(i);
         Tile next = board.getTile(i+1);
         current.setNextTile(next);
@@ -34,6 +35,7 @@ public class BoardReader {
           String actionType = (String) action.get("actionType");
           int destinationTileID = ((Double) action.get("destinationTileId")).intValue();
           String description = (String) action.get("description");
+          String category = (String) action.get("category");
 
           if (actionType.equals("Ladder")) {
             board.getTile(tileID).setLandAction(new LadderAction(destinationTileID, description));
@@ -41,7 +43,14 @@ public class BoardReader {
           if (actionType.equals("Snake")) {
             board.getTile(tileID).setLandAction(new SnakeAction(destinationTileID, description));
           }
+          if (actionType.equals("Question")) {
+            board.getTile(tileID).setLandAction(new QuestionAction(category, description));
+          }
         }
+      }
+      if (boardData.loopableBoard == true) {
+        Tile current = board.getTile(boardData.numberOfTiles+1);
+        current.setNextTile(board.getTile(1));
       }
       return board;
 

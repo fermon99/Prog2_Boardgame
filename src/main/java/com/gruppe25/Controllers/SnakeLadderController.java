@@ -7,22 +7,20 @@ import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.SnakeLadderGUI;
 import com.gruppe25.GUIs.WinnerGUI;
 import com.gruppe25.ModelClasses.BoardGame;
-import com.gruppe25.ModelClasses.Dice;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.PlayerReader;
 import com.gruppe25.ModelClasses.Tile;
 
 public class SnakeLadderController {
 
-  private BoardGame boardgame;
+  private final BoardGame boardgame;
   private List<Player> players;
-  private Dice dice;
-  private SnakeLadderGUI gui;
+  private final SnakeLadderGUI gui;
   private int currentPlayerIndex;
 
   /* File paths */
-  private String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-  private String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+  private final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+  private final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
 
   public SnakeLadderController(SnakeLadderGUI gui) {
     this.gui = gui;
@@ -35,9 +33,12 @@ public class SnakeLadderController {
     this.currentPlayerIndex = 0;
 
     if (players != null && !players.isEmpty()) {
+      int i = 0;
       for (Player player : players) {
-          Tile startTile = boardgame.getBoard().getTile(0);
-          player.placeOnTile(startTile);
+        player.setPlayerID(i);
+        Tile startTile = boardgame.getBoard().getTile(0);
+        player.placeOnTile(startTile);
+        i++;
       }
       gui.updatePlayerList(players);
       gui.updatePlayerPositions(players);

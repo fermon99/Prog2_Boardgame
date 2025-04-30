@@ -21,6 +21,7 @@ public class GameGUI extends Application {
     Button trivialPursuitButton = new Button("Trivial Pursuit");
 
     snakeLadderButton.setOnAction(e -> startGame("snakeLadder"));
+    trivialPursuitButton.setOnAction(e -> startGame("trivialPursuit"));
 
     HBox hbox = new HBox(20, snakeLadderButton, trivialPursuitButton);
     hbox.setStyle("-fx-alignment:center");
@@ -37,9 +38,10 @@ public class GameGUI extends Application {
         SnakeLadderGUI snakeLadderGUI = new SnakeLadderGUI();
         mainStage.setScene(snakeLadderGUI.createScene());
         break;
-      /* case "trivialPursuit":
-        stage.setScene(TrivialPursuitGame.createScene());
-        break; */
+       case "trivialPursuit":
+       TrivialPursuitGUI trivialPursuitGUI = new TrivialPursuitGUI();
+        mainStage.setScene(trivialPursuitGUI.createScene());
+        break;
     }
   }
 

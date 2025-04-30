@@ -11,6 +11,7 @@ import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.Tile;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class SnakeLadderGUI {
 
@@ -31,6 +33,7 @@ public class SnakeLadderGUI {
   private List<Player> players;
   private BoardGame boardgame;
   private int currentPlayerIndex;
+  private ArrayList<String> playerColors = new ArrayList<>();
 
   public SnakeLadderGUI() {
     controller = new SnakeLadderController(this);
@@ -131,7 +134,6 @@ public class SnakeLadderGUI {
       root.setCenter(scrollPane);
 
       /* Players */
-      ArrayList<String> playerColors = new ArrayList<>();
       playerColors.add("red");
       playerColors.add("blue");
       playerColors.add("yellow");
@@ -167,16 +169,26 @@ public class SnakeLadderGUI {
       }
 
       /* Add players to tiles */
+      int i = 0;
       for (Player player : players) {
         Tile tile = player.getCurrentTile();
         if (tile != null) {
           StackPane pane = tilePanes.get(tile.getTileID());
           if (pane != null) {
-            Label playerLabel = new Label(player.getName());
-            playerLabel.setStyle("-fx-font-size:10px; -fx-text-fill:blue;");
-            pane.getChildren().add(playerLabel);
+            Color color = Color.web(playerColors.get(i));
+            PlayerMarker marker = new PlayerMarker(player, color);
+            
+            StackPane.setAlignment(marker, switch (i) {
+              case 0 -> Pos.TOP_LEFT;
+              case 1 -> Pos.TOP_RIGHT;
+              case 2 -> Pos.BOTTOM_LEFT;
+              case 3 -> Pos.BOTTOM_RIGHT;
+              default -> Pos.CENTER;
+            });
+            pane.getChildren().add(marker);
           }
         }
+        i++;
       }
     }
 }

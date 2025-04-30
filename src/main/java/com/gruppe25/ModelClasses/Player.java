@@ -4,6 +4,7 @@ public class Player {
   private final String name;
   private Tile currentTile;
   private final BoardGame boardGame;
+  private int playerID;
 
   public Player(String name, BoardGame boardGame) {
     this.name = name;
@@ -35,6 +36,14 @@ public class Player {
 
   public BoardGame getBoardGame() {
     return boardGame;
+  }
+
+  public int getPlayerID() {
+    return playerID;
+  }
+
+  public void setPlayerID(int playerID) {
+    this.playerID = playerID;
   }
 
   @Override
