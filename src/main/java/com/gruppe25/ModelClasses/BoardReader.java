@@ -16,9 +16,9 @@ public class BoardReader {
       JsonReader reader = new JsonReader(new FileReader(filepath));
       BoardData boardData = gson.fromJson(reader, BoardData.class);
 
-      board = new Board(); // Creating board
+      board = new Board();
 
-      // Add tiles and connecting them
+      /* Add tiles and connect them */
       for (int i = 0; i < boardData.numberOfTiles+1; i++) {
           Tile tile = new Tile(i);
           board.addTiles(tile);
@@ -28,28 +28,41 @@ public class BoardReader {
         Tile next = board.getTile(i+1);
         current.setNextTile(next);
 
-        for (Map<String, Object> tileMap : boardData.actionTiles) {
-          int tileID = ((Double) tileMap.get("tileId")).intValue();
-
-          Map<String, Object> action = (Map<String, Object>) tileMap.get("action");
-          String actionType = (String) action.get("actionType");
-          int destinationTileID = ((Double) action.get("destinationTileId")).intValue();
-          String description = (String) action.get("description");
-          String category = (String) action.get("category");
-
-          if (actionType.equals("Ladder")) {
-            board.getTile(tileID).setLandAction(new LadderAction(destinationTileID, description));
+        if (boardData.BoardgameName.equals("Snakes and Ladders")) {
+          for (Map<String, Object> tileMap : boardData.actionTiles) {
+            int tileID = ((Double) tileMap.get("tileId")).intValue();
+  
+            Map<String, Object> action = (Map<String, Object>) tileMap.get("action");
+            String actionType = (String) action.get("actionType");
+            int destinationTileID = ((Double) action.get("destinationTileId")).intValue();
+            String description = (String) action.get("description");
+  
+            if (actionType.equals("Ladder")) {
+              board.getTile(tileID).setLandAction(new LadderAction(destinationTileID, description));
+            }
+            if (actionType.equals("Snake")) {
+              board.getTile(tileID).setLandAction(new SnakeAction(destinationTileID, description));
+            }
           }
-          if (actionType.equals("Snake")) {
-            board.getTile(tileID).setLandAction(new SnakeAction(destinationTileID, description));
-          }
-          if (actionType.equals("Question")) {
-            board.getTile(tileID).setLandAction(new QuestionAction(category, description));
+        }
+
+        if (boardData.BoardgameName.equals("Trivial Pursuit")) {
+          for (Map<String, Object> tileMap : boardData.actionTiles) {
+            int tileID = ((Double) tileMap.get("tileId")).intValue();
+  
+            Map<String, Object> action = (Map<String, Object>) tileMap.get("action");
+            String actionType = (String) action.get("actionType");
+            String description = (String) action.get("description");
+            String category = (String) action.get("category");
+  
+            if (actionType.equals("Question")) {
+              board.getTile(tileID).setLandAction(new QuestionAction(category, description));
+            }
           }
         }
       }
       if (boardData.loopableBoard == true) {
-        Tile current = board.getTile(boardData.numberOfTiles+1);
+        Tile current = board.getTile(boardData.numberOfTiles);
         current.setNextTile(board.getTile(1));
       }
       return board;

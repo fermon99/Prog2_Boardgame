@@ -1,5 +1,5 @@
 {
-  "BoardgameName": "Trivial pursuit",
+  "BoardgameName": "Trivial Pursuit",
   "Description": "A simplified version of the classic quiz game with questions from different categories",
   "numberOfTiles": 36,
   "loopableBoard": "true",

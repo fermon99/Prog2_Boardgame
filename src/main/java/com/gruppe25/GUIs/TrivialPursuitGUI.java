@@ -84,28 +84,27 @@ public class TrivialPursuitGUI {
     boardGrid.setVgap(5);
     boardGrid.setStyle("-fx-background-color: rgb(235, 235, 235);");
 
-    int size = 9; // 9x9 looped
     int tileSize = 70;
 
     for (Tile tile : board.getTiles().values()) {
       int tileID = tile.getTileID();
 
-      int row = (tileID - 1)/ size;
-      int column = (tileID - 1) % size;
+      int row = 0;
+      int column = 0;
 
       /* Square loop pattern */
       if (tileID >= 1 && tileID <= 9) {
         row = 0;
-        column = tileID - 1;
-      } else if (tileID >= 10 && tileID <= 17) {
-        row = tileID - 9;
-        column = 8;
-      } else if (tileID >= 18 && tileID <= 26) {
-        row = 8;
-        column = 8 - (tileID - 17);
-      } else if (tileID >= 27 && tileID <= 36) {
-        row = 8 - (tileID - 26);
-        column = 0;
+        column = (tileID - 1) + 1;
+      } else if (tileID >= 10 && tileID <= 18) {
+        row = tileID - 10;
+        column = 9 + 1;
+      } else if (tileID >= 19 && tileID <= 27) {
+        row = 9;
+        column = (9 + 1) - (tileID - 19);
+      } else if (tileID >= 28 && tileID <= 36) {
+        row = 9 - (tileID - 28);
+        column = 1;
       }
 
       StackPane tilePane = new StackPane();
@@ -117,14 +116,14 @@ public class TrivialPursuitGUI {
       if (tileID == 0) {
         Label startLabel = new Label("Start");
         tilePane.getChildren().add(startLabel);
-        boardGrid.add(tilePane, 0, 10);
+        boardGrid.add(tilePane, 1, 0);
       } else {
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
 
         if (tile.getLandAction() != null) {
           String type = tile.getLandAction().getClass().getSimpleName();
-          if (type.equals("LadderAction")) {
+          if (type.equals("QuestionAction")) {
             tilePane.setStyle("-fx-background-color: lightgreen; -fx-border-color: black;");
           } else if (type.equals("SnakeAction")) {
             tilePane.setStyle("-fx-background-color: lightcoral; -fx-border-color: black;");
