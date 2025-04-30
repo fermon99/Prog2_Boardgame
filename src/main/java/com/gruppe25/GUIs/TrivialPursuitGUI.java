@@ -9,6 +9,7 @@ import com.gruppe25.Controllers.TrivialPursuitController;
 import com.gruppe25.ModelClasses.Board;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
+import com.gruppe25.ModelClasses.QuestionAction;
 import com.gruppe25.ModelClasses.Tile;
 
 import javafx.geometry.Pos;
@@ -116,18 +117,26 @@ public class TrivialPursuitGUI {
       if (tileID == 0) {
         Label startLabel = new Label("Start");
         tilePane.getChildren().add(startLabel);
-        boardGrid.add(tilePane, 1, 0);
+        boardGrid.add(tilePane, 0, 0);
       } else {
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
 
-        if (tile.getLandAction() != null) {
-          String type = tile.getLandAction().getClass().getSimpleName();
-          if (type.equals("QuestionAction")) {
+        if (tile.getLandAction() != null && tile.getLandAction() instanceof QuestionAction questionAction) {
+          String category = questionAction.getCategory();
+          if (category.equals("Art and literature")) {
+            tilePane.setStyle("-fx-background-color: lightpink; -fx-border-color: black;");
+          } else if (category.equals("Science and nature")) {
             tilePane.setStyle("-fx-background-color: lightgreen; -fx-border-color: black;");
-          } else if (type.equals("SnakeAction")) {
+          } else if (category.equals("Sports and leisure")) {
+            tilePane.setStyle("-fx-background-color: orange; -fx-border-color: black;");
+          } else if (category.equals("Geography")) {
+            tilePane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
+          } else if (category.equals("Entertainment")) {
             tilePane.setStyle("-fx-background-color: lightcoral; -fx-border-color: black;");
-          }
+          } else if (category.equals("History")) {
+            tilePane.setStyle("-fx-background-color: yellow; -fx-border-color: black;");
+          } 
         }
         boardGrid.add(tilePane, column, row);
       }
