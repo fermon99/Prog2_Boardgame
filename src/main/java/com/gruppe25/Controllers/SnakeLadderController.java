@@ -2,7 +2,6 @@ package com.gruppe25.Controllers;
 
 import java.util.List;
 
-import com.gruppe25.GUIs.GameGUI;
 import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.SnakeLadderGUI;
 import com.gruppe25.GUIs.WinnerGUI;
@@ -64,7 +63,7 @@ public class SnakeLadderController {
   }
   
   public void handleBackButton() {
-    GameGUI.mainMenu();
+    
   }
 
   public void handleWin(Player winner) {

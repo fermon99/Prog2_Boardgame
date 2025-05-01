@@ -1,9 +1,10 @@
 package com.gruppe25;
 
-import com.gruppe25.GUIs.GameGUI;
+import com.gruppe25.Controllers.MainMenuController;
 
 public class Main {
     public static void main(String[] args) {
-        GameGUI.main(args);
+      MainMenuController mainMenuController = new MainMenuController();
+      mainMenuController.showMainMenu();
     }
 }

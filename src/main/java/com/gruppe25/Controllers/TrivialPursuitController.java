@@ -2,7 +2,6 @@ package com.gruppe25.Controllers;
 
 import java.util.List;
 
-import com.gruppe25.GUIs.GameGUI;
 import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.TrivialPursuitGUI;
 import com.gruppe25.GUIs.WinnerGUI;
@@ -14,19 +13,19 @@ import com.gruppe25.ModelClasses.Tile;
 public class TrivialPursuitController {
   
   private final BoardGame boardgame;
+  private TrivialPursuitGUI gui;
+  private final QuestionController questionController;
   private List<Player> players;
-  private final TrivialPursuitGUI gui;
-  private QuestionController questionController;
   private int currentPlayerIndex;
 
   /* File paths */
-  private final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-  private final String boardFileName = "src/main/resources/boards/TrivialPursuitBoardgame.json";
+  private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+  private static final String boardFileName = "src/main/resources/boards/TrivialPursuitBoardgame.json";
 
-  public TrivialPursuitController(TrivialPursuitGUI gui) {
+  public TrivialPursuitController(BoardGame boardgame, TrivialPursuitGUI gui, QuestionController questionController) {
+    this.boardgame = boardgame;
     this.gui = gui;
-    boardgame = new BoardGame();
-    questionController = new QuestionController(this);
+    this.questionController = questionController;
   }
 
   public void handleNewGame() {
@@ -35,7 +34,12 @@ public class TrivialPursuitController {
     this.currentPlayerIndex = 0;
 
     if (players != null && !players.isEmpty()) {
-      int i = 0;
+      initializePlayers(players);
+    }
+  }
+
+  private void initializePlayers(List<Player> players) {
+    int i = 0;
       for (Player player : players) {
         player.setPlayerID(i);
         Tile startTile = boardgame.getBoard().getTile(0);
@@ -44,16 +48,19 @@ public class TrivialPursuitController {
       }
       gui.updatePlayerList(players);
       gui.updatePlayerPositions(players);
-    }
   }
 
   public void handleRollDice() {
+    if (players == null || players.isEmpty()) {
+      System.out.println("No players are selected...");
+      return;
+    }
+
     Player currentPlayer = players.get(currentPlayerIndex);
     int roll = boardgame.getDice().roll();
     System.out.println(currentPlayer.getName() + " rolled " + roll);
 
-    currentPlayer.move(roll);
-    currentPlayer.getCurrentTile().landPlayer(currentPlayer);
+    movePlayer(currentPlayer, roll);
     gui.updatePlayerPositions(players);
 
     /* Win condition */
@@ -61,21 +68,16 @@ public class TrivialPursuitController {
       handleWin(getWinner());
     }
 
-    /* Next player index logic */
+    nextPlayer();
+  }
+
+  private void movePlayer(Player player, int roll) {
+    player.move(roll);
+    player.getCurrentTile().landPlayer(player);
+  }
+
+  private void nextPlayer() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-  }
-
-  public void handleBackButton() {
-    GameGUI.mainMenu();
-  }
-
-  public void handleWin(Player winner) {
-    int choice = WinnerGUI.showAndWait(winner);
-    if (choice == 1) {
-      handleNewGame();
-    } else if (choice == 2) {
-      handleBackButton();
-    }
   }
 
   public Player getWinner() {
@@ -87,6 +89,23 @@ public class TrivialPursuitController {
       }
     }
     return null;
+  }
+
+  public void handleWin(Player winner) {
+    int choice = WinnerGUI.showAndWait(winner);
+    if (choice == 1) {
+      handleNewGame();
+    } else if (choice == 2) {
+      handleBackButton();
+    }
+  }
+
+  public void handleBackButton() {
+    
+  }
+
+  public void setGUI(TrivialPursuitGUI gui) {
+    this.gui = gui;
   }
 
   public String getPlayerFile() {

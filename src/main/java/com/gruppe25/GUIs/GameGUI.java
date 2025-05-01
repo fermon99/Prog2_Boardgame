@@ -1,5 +1,7 @@
 package com.gruppe25.GUIs;
 
+import com.gruppe25.Controllers.MainMenuController;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,20 +10,27 @@ import javafx.stage.Stage;
 
 public class GameGUI extends Application {
 
-  private static Stage mainStage;
+  private MainMenuController mainMenuController;
+  private Stage mainStage;
+
+  public GameGUI() {}
+
+  public void setMainMenuController(MainMenuController mainMenuController) {
+    this.mainMenuController = mainMenuController;
+  }
   
   @Override
   public void start(Stage primaryStage) {
-    mainStage = primaryStage;
-    mainMenu();
+    this.mainStage = primaryStage;
+    showMainMenu();
   }
 
-  public static void mainMenu() {
+  public void showMainMenu() {
     Button snakeLadderButton = new Button("Snakes and Ladders");
     Button trivialPursuitButton = new Button("Trivial Pursuit");
 
-    snakeLadderButton.setOnAction(e -> startGame("snakeLadder"));
-    trivialPursuitButton.setOnAction(e -> startGame("trivialPursuit"));
+    snakeLadderButton.setOnAction(e -> mainMenuController.startGame("snakeLadder", mainStage));
+    trivialPursuitButton.setOnAction(e -> mainMenuController.startGame("trivialPursuit", mainStage));
 
     HBox hbox = new HBox(20, snakeLadderButton, trivialPursuitButton);
     hbox.setStyle("-fx-alignment:center");
@@ -32,20 +41,7 @@ public class GameGUI extends Application {
     mainStage.show();
   }
 
-  private static void startGame(String gameType) {
-    switch(gameType) {
-      case "snakeLadder":
-        SnakeLadderGUI snakeLadderGUI = new SnakeLadderGUI();
-        mainStage.setScene(snakeLadderGUI.createScene());
-        break;
-       case "trivialPursuit":
-       TrivialPursuitGUI trivialPursuitGUI = new TrivialPursuitGUI();
-        mainStage.setScene(trivialPursuitGUI.createScene());
-        break;
-    }
-  }
-
-  public static void main(String[] args) {
-    launch(args);
+  public void show() {
+    launch();
   }
 }
