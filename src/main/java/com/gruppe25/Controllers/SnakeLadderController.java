@@ -14,16 +14,16 @@ public class SnakeLadderController {
 
   private final BoardGame boardgame;
   private List<Player> players;
-  private final SnakeLadderGUI gui;
+  private SnakeLadderGUI gui;
   private int currentPlayerIndex;
 
   /* File paths */
-  private final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-  private final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+  private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+  private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
 
-  public SnakeLadderController(SnakeLadderGUI gui) {
+  public SnakeLadderController(BoardGame boardgame, SnakeLadderGUI gui) {
+    this.boardgame = boardgame;
     this.gui = gui;
-    boardgame = new BoardGame();
   }
   
   public void handleNewGame() {
@@ -32,47 +32,52 @@ public class SnakeLadderController {
     this.currentPlayerIndex = 0;
 
     if (players != null && !players.isEmpty()) {
-      int i = 0;
-      for (Player player : players) {
-        player.setPlayerID(i);
-        Tile startTile = boardgame.getBoard().getTile(0);
-        player.placeOnTile(startTile);
-        i++;
-      }
-      gui.updatePlayerList(players);
-      gui.updatePlayerPositions(players);
+      initializePlayers(players);
     }
   }
 
+  private void initializePlayers(List<Player> players) {
+    int i = 0;
+    for (Player player : players) {
+      player.setPlayerID(i);
+      Tile startTile = boardgame.getBoard().getTile(0);
+      player.placeOnTile(startTile);
+      i++;
+    }
+    gui.updatePlayerList(players);
+    gui.updatePlayerPositions(players);
+  }
+
   public void handleRollDice() {
+    if (players == null || players.isEmpty()) {
+      System.out.println("No players are selected...");
+      return;
+    }
+
     Player currentPlayer = players.get(currentPlayerIndex);
     int roll = boardgame.getDice().roll();
     System.out.println(currentPlayer.getName() + " rolled " + roll);
 
-    currentPlayer.move(roll);
-    currentPlayer.getCurrentTile().landPlayer(currentPlayer);
-    gui.updatePlayerPositions(players);
+    movePlayer(currentPlayer, roll);
+    gui.updatePlayerPositions(players);  
 
     /* Win condition */
     if (getWinner() != null) {
       handleWin(getWinner());
+      return;
     }
 
-    /* Next player index logic */
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-  }
-  
-  public void handleBackButton() {
+    nextPlayer();
     
   }
 
-  public void handleWin(Player winner) {
-    int choice = WinnerGUI.showAndWait(winner);
-    if (choice == 1) {
-      handleNewGame();
-    } else if (choice == 2) {
-      handleBackButton();
-    }
+  private void movePlayer(Player player, int roll) {
+    player.move(roll);
+    player.getCurrentTile().landPlayer(player);
+  }
+
+  private void nextPlayer() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
   }
 
   public Player getWinner() {
@@ -84,6 +89,23 @@ public class SnakeLadderController {
       }
     }
     return null;
+  }
+
+  public void handleWin(Player winner) {
+    int choice = WinnerGUI.showAndWait(winner);
+    if (choice == 1) {
+      handleNewGame();
+    } else if (choice == 2) {
+      handleBackButton();
+    }
+  }
+  
+  public void handleBackButton() {
+    
+  }
+
+  public void setGUI(SnakeLadderGUI gui) {
+    this.gui = gui;
   }
 
   public String getPlayerFile() {

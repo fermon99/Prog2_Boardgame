@@ -66,6 +66,7 @@ public class TrivialPursuitController {
     /* Win condition */
     if (getWinner() != null) {
       handleWin(getWinner());
+      return;
     }
 
     nextPlayer();

@@ -61,11 +61,24 @@ public class QuestionGUI implements QuestionHandler {
     /* Update answer */
     AtomicReference<String> selectedAnswer = new AtomicReference<>();
 
-    option1.setOnAction(e -> selectedAnswer.set(options.get(0)));
-    option2.setOnAction(e -> selectedAnswer.set(options.get(1)));
-    option3.setOnAction(e -> selectedAnswer.set(options.get(2)));
-    option4.setOnAction(e -> selectedAnswer.set(options.get(3)));
+    option1.setOnAction(e ->  {
+      selectedAnswer.set(options.get(0));
+      questionStage.close();
+    });
+    option2.setOnAction(e ->  {
+      selectedAnswer.set(options.get(1));
+      questionStage.close();
+    });
+    option3.setOnAction(e ->  {
+      selectedAnswer.set(options.get(2));
+      questionStage.close();
+    });
+    option4.setOnAction(e ->  {
+      selectedAnswer.set(options.get(3));
+      questionStage.close();
+    });
 
+    questionStage.showAndWait();
     String result = selectedAnswer.get();
     
     return result;
