@@ -30,11 +30,11 @@ public class BoardGameApp {
     return players;
   }
 
-  public void startGame(String playerFileName, String boardFileName){
+  /*public void startGame(String playerFileName, String boardFileName){
     BoardGame boardgame = new BoardGame();
 
     /* Adding all players from file */
-    List<Player> players = readPlayersFromCSV(playerFileName, boardgame);
+    /*List<Player> players = readPlayersFromCSV(playerFileName, boardgame);
     for (Player player : players) {
       System.out.println(player);
       boardgame.addPlayer(player);
@@ -44,5 +44,5 @@ public class BoardGameApp {
     boardgame.createDice(boardFileName);
 
     boardgame.play();
-  }
+  }*/
 }

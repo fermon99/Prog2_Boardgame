@@ -10,6 +10,7 @@ import com.gruppe25.ModelClasses.Board;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.Tile;
+import com.gruppe25.ModelClasses.TileActionAdder;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -46,7 +47,8 @@ public class SnakeLadderGUI {
 
       /* Create board */
       boardgame = controller.getBoardgame();
-      boardgame.createBoard(boardFileName);
+      TileActionAdder tileActionAdder = new TileActionAdder(null);
+      boardgame.createBoard(boardFileName, tileActionAdder);
 
       /* Create dice */
       boardgame.createDice(boardFileName);

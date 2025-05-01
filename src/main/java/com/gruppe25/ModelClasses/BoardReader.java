@@ -1,7 +1,9 @@
 package com.gruppe25.ModelClasses;
 
 import java.io.FileReader;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -9,14 +11,15 @@ import com.google.gson.stream.JsonReader;
 public class BoardReader {
   private static Board board;
   private static Dice dice;
+  private static Question question;
 
-  public static Board loadBoard(String filepath, BoardGame boardGame) {
+  public static Board loadBoard(String filepath, TileActionAdder tileActionAdder) {
     try {
       Gson gson = new Gson();
       JsonReader reader = new JsonReader(new FileReader(filepath));
       BoardData boardData = gson.fromJson(reader, BoardData.class);
 
-      board = new Board();
+      Board board = new Board();
 
       /* Add tiles and connect them */
       for (int i = 0; i < boardData.numberOfTiles+1; i++) {
@@ -28,39 +31,14 @@ public class BoardReader {
         Tile next = board.getTile(i+1);
         current.setNextTile(next);
 
-        if (boardData.BoardgameName.equals("Snakes and Ladders")) {
-          for (Map<String, Object> tileMap : boardData.actionTiles) {
+        for (Map<String, Object> tileMap : boardData.actionTiles) {
             int tileID = ((Double) tileMap.get("tileId")).intValue();
+            Map<String, Object> actionData = (Map<String, Object>) tileMap.get("action");
   
-            Map<String, Object> action = (Map<String, Object>) tileMap.get("action");
-            String actionType = (String) action.get("actionType");
-            int destinationTileID = ((Double) action.get("destinationTileId")).intValue();
-            String description = (String) action.get("description");
-  
-            if (actionType.equals("Ladder")) {
-              board.getTile(tileID).setLandAction(new LadderAction(destinationTileID, description));
-            }
-            if (actionType.equals("Snake")) {
-              board.getTile(tileID).setLandAction(new SnakeAction(destinationTileID, description));
-            }
+            TileAction tileAction = tileActionAdder.createTileAction(actionData);
+            board.getTile(tileID).setLandAction(tileAction);
           }
         }
-
-        if (boardData.BoardgameName.equals("Trivial Pursuit")) {
-          for (Map<String, Object> tileMap : boardData.actionTiles) {
-            int tileID = ((Double) tileMap.get("tileId")).intValue();
-  
-            Map<String, Object> action = (Map<String, Object>) tileMap.get("action");
-            String actionType = (String) action.get("actionType");
-            String description = (String) action.get("description");
-            String category = (String) action.get("category");
-  
-            if (actionType.equals("Question")) {
-              board.getTile(tileID).setLandAction(new QuestionAction(category, description));
-            }
-          }
-        }
-      }
       if (boardData.loopableBoard == true) {
         Tile current = board.getTile(boardData.numberOfTiles);
         current.setNextTile(board.getTile(1));
@@ -86,6 +64,28 @@ public class BoardReader {
       System.out.println("Error - something happened when loading in .json");
       e.printStackTrace();
       return dice;
+    }
+  }
+
+  public static Question loadQuestion(String filepath, String category) {
+    try {
+      Gson gson = new Gson();
+      JsonReader reader = new JsonReader(new FileReader(filepath));
+      QuestionData questionData = gson.fromJson(reader, QuestionData.class);
+
+      List<Question> questionList = questionData.questions.get(category);
+
+      if (questionList.isEmpty()) {
+        System.out.println("No questions found for " + category);
+        return null;
+      }
+
+      Random random = new Random();
+      return questionList.get(random.nextInt(questionList.size()));
+    } catch (Exception e) {
+      System.out.println("Error . something happened when loading in .json");
+      e.printStackTrace();
+      return null;
     }
   }
 }

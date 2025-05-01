@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gruppe25.Controllers.QuestionController;
 import com.gruppe25.Controllers.TrivialPursuitController;
 import com.gruppe25.ModelClasses.Board;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.QuestionAction;
 import com.gruppe25.ModelClasses.Tile;
+import com.gruppe25.ModelClasses.TileActionAdder;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,6 +30,8 @@ import javafx.scene.paint.Color;
 public class TrivialPursuitGUI {
   
   private TrivialPursuitController controller;
+  private QuestionController questionController;
+
   private ListView<Player> activePlayerListView;
 
   private Map<Integer, StackPane> tilePanes = new HashMap<>();
@@ -39,16 +43,20 @@ public class TrivialPursuitGUI {
 
   public TrivialPursuitGUI() {
     controller = new TrivialPursuitController(this);
+    questionController = new QuestionController(controller);
   }
 
   public Scene createScene() {
+    QuestionGUI questionGUI = new QuestionGUI(questionController);
+    TileActionAdder tileActionAdder = new TileActionAdder(questionGUI);
+
     /* File paths */
     String playerFileName = controller.getPlayerFile();
     String boardFileName = controller.getBoardFile();
 
     /* Create board */
     boardgame = controller.getBoardgame();
-    boardgame.createBoard(boardFileName);
+    boardgame.createBoard(boardFileName, tileActionAdder);
 
     /* Create dice */
     boardgame.createDice(boardFileName);

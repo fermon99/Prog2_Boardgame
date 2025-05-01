@@ -16,6 +16,7 @@ public class TrivialPursuitController {
   private final BoardGame boardgame;
   private List<Player> players;
   private final TrivialPursuitGUI gui;
+  private QuestionController questionController;
   private int currentPlayerIndex;
 
   /* File paths */
@@ -25,6 +26,7 @@ public class TrivialPursuitController {
   public TrivialPursuitController(TrivialPursuitGUI gui) {
     this.gui = gui;
     boardgame = new BoardGame();
+    questionController = new QuestionController(this);
   }
 
   public void handleNewGame() {

@@ -1,0 +1,73 @@
+package com.gruppe25.GUIs;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import com.gruppe25.Controllers.QuestionController;
+import com.gruppe25.ModelClasses.Player;
+import com.gruppe25.ModelClasses.Question;
+import com.gruppe25.ModelClasses.QuestionHandler;
+
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class QuestionGUI implements QuestionHandler {
+
+  private static QuestionController controller;
+
+  public QuestionGUI(QuestionController controller) {
+    this.controller = controller;
+  }
+
+  @Override
+  public void handleQuestion(Player player, String category) {
+    Question question = controller.getRandomQuestion(category);
+    question(player, category, question);
+  }
+
+  public static String question(Player player, String category, Question question) {
+    Stage questionStage = new Stage();
+    questionStage.initModality(Modality.APPLICATION_MODAL);
+    questionStage.setTitle("Question");
+
+    VBox layout = new VBox(10);
+    layout.setAlignment(Pos.CENTER);
+
+    Label questionTitle = new Label(player + ", you landed on the " + category + " category!");
+    Label questionText = new Label(question.getQuestionText());
+
+    HBox optionLayout = new HBox(20);
+    optionLayout.setAlignment(Pos.CENTER);
+    List<String> options = question.getOptions();
+    Button option1 = new Button(options.get(0));
+    Button option2 = new Button(options.get(1));
+    Button option3 = new Button(options.get(2));
+    Button option4 = new Button(options.get(3));
+    optionLayout.getChildren().addAll(option1, option2, option3, option4);
+    
+
+    layout.getChildren().addAll(questionTitle, questionText, optionLayout);
+
+    Scene scene = new Scene(layout, 600, 300);
+    questionStage.setScene(scene);
+    questionStage.showAndWait();
+
+    /* Update answer */
+    AtomicReference<String> selectedAnswer = new AtomicReference<>();
+
+    option1.setOnAction(e -> selectedAnswer.set(options.get(0)));
+    option2.setOnAction(e -> selectedAnswer.set(options.get(1)));
+    option3.setOnAction(e -> selectedAnswer.set(options.get(2)));
+    option4.setOnAction(e -> selectedAnswer.set(options.get(3)));
+
+    String result = selectedAnswer.get();
+    
+    return result;
+  }
+}

@@ -18,8 +18,8 @@ public class BoardGame {
   }
 
   
-  public void createBoard(String filepath) {
-    board = BoardReader.loadBoard(filepath, this);
+  public void createBoard(String filepath, TileActionAdder tileActionAdder) {
+    board = BoardReader.loadBoard(filepath, tileActionAdder);
   }
   
 
@@ -27,8 +27,8 @@ public class BoardGame {
     dice = BoardReader.loadDice(filepath, this);
   }
 
-  public void init(String filepath) {
-    createBoard(filepath);
+  public void init(String filepath, TileActionAdder tileActionAdder) {
+    createBoard(filepath, tileActionAdder);
     createDice(filepath);
   }
   
