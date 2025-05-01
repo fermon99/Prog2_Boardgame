@@ -21,12 +21,8 @@ public class MainMenuController {
   public void startGame(String gameType, Stage stage) {
     switch(gameType) {
       case "snakeLadder":
-        BoardGame snakeLadderBoardgame = new BoardGame();
-        snakeLadderBoardgame.createBoard(snakeLadderFileName, );
-        SnakeLadderController snakeLadderController = new SnakeLadderController(snakeLadderBoardgame, null);
-        SnakeLadderGUI snakeLadderGUI = new SnakeLadderGUI(snakeLadderController);
-        snakeLadderController.setGUI(snakeLadderGUI);
-        snakeLadderGUI.show(stage);
+        SnakeLadderController snakeLadderController = new SnakeLadderController();
+        snakeLadderController.start(stage);
         break;
       case "trivialPursuit":
         BoardGame trivialPursuitBoardgame = new BoardGame();

@@ -9,6 +9,9 @@ import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.PlayerReader;
 import com.gruppe25.ModelClasses.Tile;
+import com.gruppe25.ModelClasses.TileActionAdder;
+
+import javafx.stage.Stage;
 
 public class SnakeLadderController {
 
@@ -21,9 +24,15 @@ public class SnakeLadderController {
   private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
   private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
 
-  public SnakeLadderController(BoardGame boardgame, SnakeLadderGUI gui) {
-    this.boardgame = boardgame;
-    this.gui = gui;
+  public SnakeLadderController() {
+    this.boardgame = new BoardGame();
+    this.boardgame.init(boardFileName, new TileActionAdder(null));
+
+    this.gui = new SnakeLadderGUI(this);
+  }
+
+  public void start(Stage stage) {
+    gui.show(stage);
   }
   
   public void handleNewGame() {
