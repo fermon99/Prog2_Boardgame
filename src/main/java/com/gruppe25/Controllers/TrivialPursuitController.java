@@ -3,12 +3,16 @@ package com.gruppe25.Controllers;
 import java.util.List;
 
 import com.gruppe25.GUIs.NewGameGUI;
+import com.gruppe25.GUIs.QuestionGUI;
 import com.gruppe25.GUIs.TrivialPursuitGUI;
 import com.gruppe25.GUIs.WinnerGUI;
 import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.PlayerReader;
 import com.gruppe25.ModelClasses.Tile;
+import com.gruppe25.ModelClasses.TileActionAdder;
+
+import javafx.stage.Stage;
 
 public class TrivialPursuitController {
   
@@ -18,14 +22,24 @@ public class TrivialPursuitController {
   private List<Player> players;
   private int currentPlayerIndex;
 
+  private QuestionGUI questionGUI;
+  private TileActionAdder tileActionAdder;
+
   /* File paths */
   private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
   private static final String boardFileName = "src/main/resources/boards/TrivialPursuitBoardgame.json";
 
-  public TrivialPursuitController(BoardGame boardgame, TrivialPursuitGUI gui, QuestionController questionController) {
-    this.boardgame = boardgame;
-    this.gui = gui;
-    this.questionController = questionController;
+  public TrivialPursuitController() {
+    this.questionController = new QuestionController(this);
+    this.questionGUI = new QuestionGUI(questionController);
+    this.tileActionAdder = new TileActionAdder(questionController);
+    this.boardgame = new BoardGame();
+    this.boardgame.init(boardFileName, new TileActionAdder(questionController));
+    this.gui = new TrivialPursuitGUI(this);
+  }
+
+  public void start(Stage stage) {
+    gui.show(stage);
   }
 
   public void handleNewGame() {
@@ -125,4 +139,11 @@ public class TrivialPursuitController {
     return players;
   } 
   
+  public TileActionAdder getTileActionAdder() {
+    return tileActionAdder;
+  }
+
+  public QuestionGUI getQuestionGUI() {
+    return questionGUI;
+  }
 }
