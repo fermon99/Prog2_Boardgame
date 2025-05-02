@@ -47,6 +47,7 @@ public class SnakeLadderGUI {
 
     Label activePlayersLabel = new Label("Active players");
     activePlayerListView = new ListView<>();
+    activePlayerListView.setPrefHeight(4*32);
 
     sideBar.getChildren().addAll(new Label("Controls"),
                                  newGameButton, 

@@ -40,7 +40,7 @@ public class TrivialPursuitGUI {
     primaryStage.setTitle("Trivial Pursuit");
 
     /* Sidebar */
-    VBox sideBar = new VBox();
+    VBox sideBar = new VBox(20);
     sideBar.setPrefWidth(200);
     sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
 
@@ -50,6 +50,7 @@ public class TrivialPursuitGUI {
 
     Label activePlayersLabel = new Label("Active players");
     activePlayerListView = new ListView<>();
+    activePlayerListView.setPrefHeight(4*32);
 
     sideBar.getChildren().addAll(new Label("Controls"),
                                   newGameButton, 
