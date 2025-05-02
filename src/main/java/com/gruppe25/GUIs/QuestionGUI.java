@@ -55,7 +55,6 @@ public class QuestionGUI /*implements QuestionHandler*/ {
 
     Scene scene = new Scene(layout, 600, 300);
     questionStage.setScene(scene);
-    questionStage.showAndWait();
 
     /* Update answer */
     AtomicReference<String> selectedAnswer = new AtomicReference<>();

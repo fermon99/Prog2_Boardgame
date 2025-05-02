@@ -2,6 +2,7 @@ package com.gruppe25.Controllers;
 
 import java.util.List;
 
+import com.gruppe25.GUIs.GameGUI;
 import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.SnakeLadderGUI;
 import com.gruppe25.GUIs.WinnerGUI;
@@ -20,6 +21,8 @@ public class SnakeLadderController {
   private SnakeLadderGUI gui;
   private int currentPlayerIndex;
 
+  private Stage stage;
+
   /* File paths */
   private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
   private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
@@ -32,6 +35,7 @@ public class SnakeLadderController {
   }
 
   public void start(Stage stage) {
+    this.stage = stage;
     gui.show(stage);
   }
   
@@ -75,9 +79,7 @@ public class SnakeLadderController {
       handleWin(getWinner());
       return;
     }
-
     nextPlayer();
-    
   }
 
   private void movePlayer(Player player, int roll) {
@@ -105,12 +107,15 @@ public class SnakeLadderController {
     if (choice == 1) {
       handleNewGame();
     } else if (choice == 2) {
-      handleBackButton();
+      handleBackButton(stage);
     }
   }
   
-  public void handleBackButton() {
-    
+  public void handleBackButton(Stage stage) {
+    MainMenuController mainMenuController = new MainMenuController(null);
+    GameGUI gameGUI = new GameGUI(mainMenuController);
+    mainMenuController.setGUI(gameGUI);
+    gameGUI.start(stage);
   }
 
   public void setGUI(SnakeLadderGUI gui) {

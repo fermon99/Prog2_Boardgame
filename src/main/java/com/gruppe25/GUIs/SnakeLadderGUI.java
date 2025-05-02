@@ -72,7 +72,7 @@ public class SnakeLadderGUI {
 
     newGameButton.setOnAction(e -> controller.handleNewGame());
     rollDiceButton.setOnAction(e -> controller.handleRollDice());
-    backButton.setOnAction(e -> controller.handleBackButton());
+    backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
   }
 
   private GridPane createBoardGrid() {

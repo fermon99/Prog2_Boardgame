@@ -1,7 +1,9 @@
 package com.gruppe25.Controllers;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.gruppe25.GUIs.GameGUI;
 import com.gruppe25.GUIs.NewGameGUI;
 import com.gruppe25.GUIs.QuestionGUI;
 import com.gruppe25.GUIs.TrivialPursuitGUI;
@@ -21,9 +23,11 @@ public class TrivialPursuitController {
   private final QuestionController questionController;
   private List<Player> players;
   private int currentPlayerIndex;
+  private final HashMap<Player, Integer> playerScores = new HashMap<>();
 
   private QuestionGUI questionGUI;
   private TileActionAdder tileActionAdder;
+  private Stage stage;
 
   /* File paths */
   private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
@@ -39,6 +43,7 @@ public class TrivialPursuitController {
   }
 
   public void start(Stage stage) {
+    this.stage = stage;
     gui.show(stage);
   }
 
@@ -58,10 +63,16 @@ public class TrivialPursuitController {
         player.setPlayerID(i);
         Tile startTile = boardgame.getBoard().getTile(0);
         player.placeOnTile(startTile);
+        playerScores.put(player, 0);
         i++;
       }
       gui.updatePlayerList(players);
       gui.updatePlayerPositions(players);
+  }
+
+  public void handleCorrectAnswer(Player player) {
+    playerScores.put(player, playerScores.getOrDefault(player, 0) + 1);
+    System.out.println("Correct answer - player score is now " + playerScores.get(player));
   }
 
   public void handleRollDice() {
@@ -99,7 +110,7 @@ public class TrivialPursuitController {
     if (players == null) return null;
 
     for (Player player : players) {
-      if (player.getCurrentTile().getTileID() == boardgame.getBoard().getBoardSize() - 1) {
+      if (playerScores.get(player) >= 5) {
         return player;
       }
     }
@@ -111,12 +122,15 @@ public class TrivialPursuitController {
     if (choice == 1) {
       handleNewGame();
     } else if (choice == 2) {
-      handleBackButton();
+      handleBackButton(stage);
     }
   }
 
-  public void handleBackButton() {
-    
+  public void handleBackButton(Stage stage) {
+    MainMenuController mainMenuController = new MainMenuController(null);
+    GameGUI gameGUI = new GameGUI(mainMenuController);
+    mainMenuController.setGUI(gameGUI);
+    gameGUI.start(stage);
   }
 
   public void setGUI(TrivialPursuitGUI gui) {

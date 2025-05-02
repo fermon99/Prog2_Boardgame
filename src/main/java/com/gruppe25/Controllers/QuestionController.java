@@ -10,6 +10,7 @@ public class QuestionController implements QuestionHandler {
 
   private final TrivialPursuitController trivialPursuitController;
   private QuestionGUI questionGUI;
+  private String result;
   
   public QuestionController(TrivialPursuitController trivialPursuitController) {
     this.trivialPursuitController = trivialPursuitController;
@@ -19,7 +20,10 @@ public class QuestionController implements QuestionHandler {
   @Override
   public void handleQuestion(Player player, String category) {
     Question question = getRandomQuestion(category);
-    questionGUI.question(player, category, question);
+    result = questionGUI.question(player, category, question);
+    if (checkAnswer(question, result) == true) {
+      trivialPursuitController.handleCorrectAnswer(player);
+    } 
   }
 
   public Question getRandomQuestion(String category) {
@@ -29,7 +33,7 @@ public class QuestionController implements QuestionHandler {
     return question;
   }
 
-  public boolean checkAnswer(Question question, String selectedAnswer) {
+  private boolean checkAnswer(Question question, String selectedAnswer) {
     return question.getCorrectAnswer().equals(selectedAnswer);
   }
 }
