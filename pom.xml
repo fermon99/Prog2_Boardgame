@@ -65,7 +65,7 @@
                 <version>0.0.8</version>
                 <configuration>
                     <!-- TODO: Replace with your own main-class -->
-                    <mainClass>Main</mainClass>
+                    <mainClass>com.gruppe25.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

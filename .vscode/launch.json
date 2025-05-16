@@ -1,0 +1,17 @@
+{
+  "type": "java",
+  "name": "Launch Game",
+  "request": "launch",
+  "mainClass": "com.gruppe25.Main",
+  "vmArgs": "--module-path ${env:JAVA_FX_LIB} --add-modules javafx.controls",
+  "projectName": "boardgame",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "com.gruppe25.Main",
+      "projectName": "boardgame"
+    }
+  ]
+}

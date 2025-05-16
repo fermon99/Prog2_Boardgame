@@ -39,24 +39,25 @@ public class TrivialPursuitGUI {
   public void show(Stage primaryStage) {
     primaryStage.setTitle("Trivial Pursuit");
 
-     /* Sidebar */
-     VBox sideBar = new VBox();
-     sideBar.setPrefWidth(200);
-     sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
- 
-     Button newGameButton = new Button("New game");
-     Button rollDiceButton = new Button("Roll dice");
-     Button backButton = new Button("Back to selection");
- 
-     Label activePlayersLabel = new Label("Active players");
-     activePlayerListView = new ListView<>();
- 
-     sideBar.getChildren().addAll(new Label("Controls"),
-                                   newGameButton, 
-                                   rollDiceButton,
-                                   activePlayersLabel,
-                                   activePlayerListView,
-                                   backButton);
+    /* Sidebar */
+    VBox sideBar = new VBox(20);
+    sideBar.setPrefWidth(200);
+    sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
+
+    Button newGameButton = new Button("New game");
+    Button rollDiceButton = new Button("Roll dice");
+    Button backButton = new Button("Back to selection");
+
+    Label activePlayersLabel = new Label("Active players");
+    activePlayerListView = new ListView<>();
+    activePlayerListView.setPrefHeight(4*32);
+
+    sideBar.getChildren().addAll(new Label("Controls"),
+                                  newGameButton, 
+                                  rollDiceButton,
+                                  activePlayersLabel,
+                                  activePlayerListView,
+                                  backButton);
 
     /* Board grid */
     GridPane boardGrid = createBoardGrid();
@@ -76,7 +77,7 @@ public class TrivialPursuitGUI {
     /* Buttons */
     newGameButton.setOnAction(e -> controller.handleNewGame());
     rollDiceButton.setOnAction(e -> controller.handleRollDice());
-    backButton.setOnAction(e -> controller.handleBackButton());
+    backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
   }
 
   private GridPane createBoardGrid() {

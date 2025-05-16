@@ -2,24 +2,20 @@ package com.gruppe25.GUIs;
 
 import com.gruppe25.Controllers.MainMenuController;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class GameGUI extends Application {
+public class GameGUI {
 
   private MainMenuController mainMenuController;
   private Stage mainStage;
 
-  public GameGUI() {}
-
-  public void setMainMenuController(MainMenuController mainMenuController) {
+  public GameGUI(MainMenuController mainMenuController) {
     this.mainMenuController = mainMenuController;
   }
   
-  @Override
   public void start(Stage primaryStage) {
     this.mainStage = primaryStage;
     showMainMenu();
@@ -39,9 +35,5 @@ public class GameGUI extends Application {
     mainStage.setTitle("Choose a boardgame");
     mainStage.setScene(selectionScene);
     mainStage.show();
-  }
-
-  public void show() {
-    launch();
   }
 }

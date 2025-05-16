@@ -46,6 +46,11 @@ public class NewGameGUI {
     newGameStage.setScene(scene);
     newGameStage.showAndWait();
 
-    return selectedPlayers;
+    if (selectedPlayers.size() <= 4) {
+      return selectedPlayers;
+    } else {
+      System.out.println("Too many players selected");
+      return null;
+    }
   }
 }

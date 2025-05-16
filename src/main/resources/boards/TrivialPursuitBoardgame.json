@@ -261,7 +261,8 @@
           "Brazil",
           "Argentina",
           "Costa Rica"
-        ]
+        ],
+        "correctAnswer": "Germany"
       }
     ],
     "Geography": [
@@ -304,7 +305,8 @@
           "Jack Black",
           "Wirtual",
           "LocalThunk"
-        ]
+        ],
+        "correctAnswer": "Notch"
       }
     ],
     "History": [
