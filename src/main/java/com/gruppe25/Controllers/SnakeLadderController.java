@@ -10,21 +10,33 @@ import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.PlayerReader;
 import com.gruppe25.ModelClasses.Tile;
+import com.gruppe25.ModelClasses.TileActionAdder;
+
+import javafx.stage.Stage;
 
 public class SnakeLadderController {
 
   private final BoardGame boardgame;
   private List<Player> players;
-  private final SnakeLadderGUI gui;
+  private SnakeLadderGUI gui;
   private int currentPlayerIndex;
 
-  /* File paths */
-  private final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
-  private final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+  private Stage stage;
 
-  public SnakeLadderController(SnakeLadderGUI gui) {
-    this.gui = gui;
-    boardgame = new BoardGame();
+  /* File paths */
+  private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
+  private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+
+  public SnakeLadderController() {
+    this.boardgame = new BoardGame();
+    this.boardgame.init(boardFileName, new TileActionAdder(null));
+
+    this.gui = new SnakeLadderGUI(this);
+  }
+
+  public void start(Stage stage) {
+    this.stage = stage;
+    gui.show(stage);
   }
   
   public void handleNewGame() {
@@ -33,47 +45,50 @@ public class SnakeLadderController {
     this.currentPlayerIndex = 0;
 
     if (players != null && !players.isEmpty()) {
-      int i = 0;
-      for (Player player : players) {
-        player.setPlayerID(i);
-        Tile startTile = boardgame.getBoard().getTile(0);
-        player.placeOnTile(startTile);
-        i++;
-      }
-      gui.updatePlayerList(players);
-      gui.updatePlayerPositions(players);
+      initializePlayers(players);
     }
   }
 
+  private void initializePlayers(List<Player> players) {
+    int i = 0;
+    for (Player player : players) {
+      player.setPlayerID(i);
+      Tile startTile = boardgame.getBoard().getTile(0);
+      player.placeOnTile(startTile);
+      i++;
+    }
+    gui.updatePlayerList(players);
+    gui.updatePlayerPositions(players);
+  }
+
   public void handleRollDice() {
+    if (players == null || players.isEmpty()) {
+      System.out.println("No players are selected...");
+      return;
+    }
+
     Player currentPlayer = players.get(currentPlayerIndex);
     int roll = boardgame.getDice().roll();
     System.out.println(currentPlayer.getName() + " rolled " + roll);
 
-    currentPlayer.move(roll);
-    currentPlayer.getCurrentTile().landPlayer(currentPlayer);
-    gui.updatePlayerPositions(players);
+    movePlayer(currentPlayer, roll);
+    gui.updatePlayerPositions(players);  
 
     /* Win condition */
     if (getWinner() != null) {
       handleWin(getWinner());
+      return;
     }
+    nextPlayer();
+  }
 
-    /* Next player index logic */
+  private void movePlayer(Player player, int roll) {
+    player.move(roll);
+    player.getCurrentTile().landPlayer(player);
+  }
+
+  private void nextPlayer() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-  }
-  
-  public void handleBackButton() {
-    GameGUI.mainMenu();
-  }
-
-  public void handleWin(Player winner) {
-    int choice = WinnerGUI.showAndWait(winner);
-    if (choice == 1) {
-      handleNewGame();
-    } else if (choice == 2) {
-      handleBackButton();
-    }
   }
 
   public Player getWinner() {
@@ -85,6 +100,26 @@ public class SnakeLadderController {
       }
     }
     return null;
+  }
+
+  public void handleWin(Player winner) {
+    int choice = WinnerGUI.showAndWait(winner);
+    if (choice == 1) {
+      handleNewGame();
+    } else if (choice == 2) {
+      handleBackButton(stage);
+    }
+  }
+  
+  public void handleBackButton(Stage stage) {
+    MainMenuController mainMenuController = new MainMenuController(null);
+    GameGUI gameGUI = new GameGUI(mainMenuController);
+    mainMenuController.setGUI(gameGUI);
+    gameGUI.start(stage);
+  }
+
+  public void setGUI(SnakeLadderGUI gui) {
+    this.gui = gui;
   }
 
   public String getPlayerFile() {

@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.gruppe25.Controllers.QuestionController;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.Question;
-import com.gruppe25.ModelClasses.QuestionHandler;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class QuestionGUI implements QuestionHandler {
+public class QuestionGUI /*implements QuestionHandler*/ {
 
   private static QuestionController controller;
 
@@ -25,11 +24,11 @@ public class QuestionGUI implements QuestionHandler {
     this.controller = controller;
   }
 
-  @Override
+  /*@Override
   public void handleQuestion(Player player, String category) {
     Question question = controller.getRandomQuestion(category);
     question(player, category, question);
-  }
+  } */
 
   public static String question(Player player, String category, Question question) {
     Stage questionStage = new Stage();
@@ -56,16 +55,28 @@ public class QuestionGUI implements QuestionHandler {
 
     Scene scene = new Scene(layout, 600, 300);
     questionStage.setScene(scene);
-    questionStage.showAndWait();
 
     /* Update answer */
     AtomicReference<String> selectedAnswer = new AtomicReference<>();
 
-    option1.setOnAction(e -> selectedAnswer.set(options.get(0)));
-    option2.setOnAction(e -> selectedAnswer.set(options.get(1)));
-    option3.setOnAction(e -> selectedAnswer.set(options.get(2)));
-    option4.setOnAction(e -> selectedAnswer.set(options.get(3)));
+    option1.setOnAction(e ->  {
+      selectedAnswer.set(options.get(0));
+      questionStage.close();
+    });
+    option2.setOnAction(e ->  {
+      selectedAnswer.set(options.get(1));
+      questionStage.close();
+    });
+    option3.setOnAction(e ->  {
+      selectedAnswer.set(options.get(2));
+      questionStage.close();
+    });
+    option4.setOnAction(e ->  {
+      selectedAnswer.set(options.get(3));
+      questionStage.close();
+    });
 
+    questionStage.showAndWait();
     String result = selectedAnswer.get();
     
     return result;

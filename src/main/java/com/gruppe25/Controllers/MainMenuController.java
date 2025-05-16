@@ -1,0 +1,37 @@
+package com.gruppe25.Controllers;
+
+import com.gruppe25.GUIs.GameGUI;
+
+import javafx.stage.Stage;
+
+public class MainMenuController {
+
+  private GameGUI gameGUI;
+
+  public MainMenuController(GameGUI gameGUI) {
+    this.gameGUI = gameGUI;
+  }
+
+  public void startGame(String gameType, Stage stage) {
+    switch(gameType) {
+      case "snakeLadder":
+        SnakeLadderController snakeLadderController = new SnakeLadderController();
+        snakeLadderController.start(stage);
+        break;
+      case "trivialPursuit":
+        TrivialPursuitController trivialPursuitController = new TrivialPursuitController();
+        trivialPursuitController.start(stage);
+        break;
+      default:
+        System.out.println("Unknown game...");
+    }
+  }
+
+  public void exitApplication() {
+    System.exit(0);
+  }
+
+  public void setGUI(GameGUI gui) {
+    this.gameGUI = gui;
+  }
+}

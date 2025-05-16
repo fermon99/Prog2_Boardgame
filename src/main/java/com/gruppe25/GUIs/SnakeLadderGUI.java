@@ -7,10 +7,8 @@ import java.util.Map;
 
 import com.gruppe25.Controllers.SnakeLadderController;
 import com.gruppe25.ModelClasses.Board;
-import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.Tile;
-import com.gruppe25.ModelClasses.TileActionAdder;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,10 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class SnakeLadderGUI {
 
@@ -31,132 +29,101 @@ public class SnakeLadderGUI {
   private ListView<Player> activePlayerListView;
 
   private Map<Integer, StackPane> tilePanes = new HashMap<>();
-  private List<Player> players;
-  private BoardGame boardgame;
-  private int currentPlayerIndex;
   private ArrayList<String> playerColors = new ArrayList<>();
 
-  public SnakeLadderGUI() {
-    controller = new SnakeLadderController(this);
+  public SnakeLadderGUI(SnakeLadderController controller) {
+    this.controller = controller;
   }
 
-  public Scene createScene() {
-      /* File paths */
-      String playerFileName = controller.getPlayerFile();
-      String boardFileName = controller.getBoardFile();
+  public void show(Stage primaryStage) {
+    /* Sidebar */
+    VBox sideBar = new VBox();
+    sideBar.setPrefWidth(200);
+    sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
 
-      /* Create board */
-      boardgame = controller.getBoardgame();
-      TileActionAdder tileActionAdder = new TileActionAdder(null);
-      boardgame.createBoard(boardFileName, tileActionAdder);
+    Button newGameButton = new Button("New game");
+    Button rollDiceButton = new Button("Roll dice");
+    Button backButton = new Button("Back to selection");
 
-      /* Create dice */
-      boardgame.createDice(boardFileName);
+    Label activePlayersLabel = new Label("Active players");
+    activePlayerListView = new ListView<>();
+    activePlayerListView.setPrefHeight(4*32);
 
-      Board board = boardgame.getBoard();
-      players = controller.getPlayers();
+    sideBar.getChildren().addAll(new Label("Controls"),
+                                 newGameButton, 
+                                 rollDiceButton,
+                                 activePlayersLabel,
+                                 activePlayerListView,
+                                 backButton);
 
-      /* Sidebar */
-      VBox sideBar = new VBox();
-      sideBar.setPrefWidth(200);
-      sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
+    /* Board grid */
+    GridPane boardGrid = createBoardGrid();
+    ScrollPane scrollPane = new ScrollPane(boardGrid);
+    scrollPane.setFitToWidth(true);
+    scrollPane.setFitToHeight(true);
 
-      Button newGameButton = new Button("New game");
-      Button rollDiceButton = new Button("Roll dice");
-      Button backButton = new Button("Back to selection");
+    /* layout */
+    BorderPane root = new BorderPane();
+    root.setLeft(sideBar);
+    root.setCenter(scrollPane);
 
-      Label activePlayersLabel = new Label("Active players");
-      activePlayerListView = new ListView<>();
+    Scene scene = new Scene(root, 1280, 720);
+    primaryStage.setScene(scene);
+    primaryStage.show();
 
-      sideBar.getChildren().addAll(new Label("Controls"),
-                                   newGameButton, 
-                                   rollDiceButton,
-                                   activePlayersLabel,
-                                   activePlayerListView,
-                                   backButton);
+    newGameButton.setOnAction(e -> controller.handleNewGame());
+    rollDiceButton.setOnAction(e -> controller.handleRollDice());
+    backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
+  }
 
-      /* Main content area */
-      Pane mainArea = new Pane();
-      mainArea.setStyle("-fx-background-color:rgb(235, 235, 235)");
+  private GridPane createBoardGrid() {
+    GridPane boardGrid = new GridPane();
+    boardGrid.setHgap(5);
+    boardGrid.setVgap(5);
+    boardGrid.setStyle("-fx-background-color: rgb(235, 235, 235);");
 
-      /* Boardgrid */
-      GridPane boardGrid = new GridPane();
-      boardGrid.setHgap(5);
-      boardGrid.setVgap(5);
-      boardGrid.setStyle("-fx-background-color: rgb(235, 235, 235);");
+    int columns = 9;
+    int tileSize = 70;
+    Board board = controller.getBoardgame().getBoard();
 
-      int columns = 9;
-      int tileSize = 70;
+    for (Tile tile : board.getTiles().values()) {
+      int tileID = tile.getTileID();
 
-      for (Tile tile : board.getTiles().values()) {
-        int tileID = tile.getTileID();
+      int row = (tileID - 1 )/ columns;
+      int column = (tileID - 1) % columns;
 
-        int row = (tileID - 1 )/ columns;
-        int column = (tileID - 1) % columns;
-
-        /* For zig-zag pattern */
-        if (row % 2 == 1) {
-          column = columns - 1 - column;
-        }
-
-        StackPane tilePane = new StackPane();
-        tilePane.setPrefSize(tileSize, tileSize);
-        tilePane.setStyle("-fx-border-color: black; -fx-background-color: white;");
-
-        tilePanes.put(tileID, tilePane);
-
-        if (tileID == 0) {
-          Label startLabel = new Label("Start");
-          tilePane.getChildren().add(startLabel);
-          boardGrid.add(tilePane, 0, 10);
-        } else {
-          Label label = new Label(String.valueOf(tileID));
-          tilePane.getChildren().add(label);
-
-          if (tile.getLandAction() != null) {
-            String type = tile.getLandAction().getClass().getSimpleName();
-            if (type.equals("LadderAction")) {
-              tilePane.setStyle("-fx-background-color: lightgreen; -fx-border-color: black;");
-            } else if (type.equals("SnakeAction")) {
-              tilePane.setStyle("-fx-background-color: lightcoral; -fx-border-color: black;");
-            }
-          }
-          boardGrid.add(tilePane, column, 9 - row);
-        }
+      /* For zig-zag pattern */
+      if (row % 2 == 1) {
+        column = columns - 1 - column;
       }
 
-      ScrollPane scrollPane = new ScrollPane(boardGrid);
-      scrollPane.setFitToWidth(true);
-      scrollPane.setFitToHeight(true);
+      StackPane tilePane = new StackPane();
+      tilePane.setPrefSize(tileSize, tileSize);
+      tilePane.setStyle("-fx-border-color: black; -fx-background-color: white;");
 
-      /* Layout */
-      BorderPane root = new BorderPane();
-      root.setLeft(sideBar);
-      root.setCenter(mainArea);
-      root.setCenter(scrollPane);
+      tilePanes.put(tileID, tilePane);
 
-      /* Players */
-      playerColors.add("red");
-      playerColors.add("blue");
-      playerColors.add("yellow");
-      playerColors.add("green");
+      if (tileID == 0) {
+        Label startLabel = new Label("Start");
+        tilePane.getChildren().add(startLabel);
+        boardGrid.add(tilePane, 0, 10);
+      } else {
+        Label label = new Label(String.valueOf(tileID));
+        tilePane.getChildren().add(label);
 
-      /* Dice */
-
-      /* New game button */
-      newGameButton.setOnAction(e -> controller.handleNewGame());
-
-      /* Roll dice button */
-      rollDiceButton.setOnAction(e -> controller.handleRollDice());
-      
-      /* Back button */
-      backButton.setOnAction(e -> controller.handleBackButton());
-
-      // BoardGameApp runBoard = new BoardGameApp(playerFileName, boardFileName, boardgame);
-      // runBoard.startGame(playerFileName, boardFileName); 
-
-      return new Scene(root, 1280, 720);
+        if (tile.getLandAction() != null) {
+          String type = tile.getLandAction().getClass().getSimpleName();
+          if (type.equals("LadderAction")) {
+            tilePane.setStyle("-fx-background-color: lightgreen; -fx-border-color: black;");
+          } else if (type.equals("SnakeAction")) {
+            tilePane.setStyle("-fx-background-color: lightcoral; -fx-border-color: black;");
+          }
+        }
+        boardGrid.add(tilePane, column, 9 - row);
+      }
     }
+    return boardGrid;
+  }
 
     public void updatePlayerList(List<Player> players) {
       activePlayerListView.getItems().setAll(players);
@@ -171,6 +138,12 @@ public class SnakeLadderGUI {
       }
 
       /* Add players to tiles */
+      /* Player colors */
+      playerColors.add("red");
+      playerColors.add("blue");
+      playerColors.add("yellow");
+      playerColors.add("green");
+
       int i = 0;
       for (Player player : players) {
         Tile tile = player.getCurrentTile();

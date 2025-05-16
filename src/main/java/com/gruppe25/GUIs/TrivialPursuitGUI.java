@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.gruppe25.Controllers.QuestionController;
 import com.gruppe25.Controllers.TrivialPursuitController;
 import com.gruppe25.ModelClasses.Board;
-import com.gruppe25.ModelClasses.BoardGame;
 import com.gruppe25.ModelClasses.Player;
 import com.gruppe25.ModelClasses.QuestionAction;
 import com.gruppe25.ModelClasses.Tile;
-import com.gruppe25.ModelClasses.TileActionAdder;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,50 +19,28 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class TrivialPursuitGUI {
   
-  private TrivialPursuitController controller;
-  private QuestionController questionController;
-
+  private final TrivialPursuitController controller;
   private ListView<Player> activePlayerListView;
 
   private Map<Integer, StackPane> tilePanes = new HashMap<>();
-  private List<Player> players;
-  private BoardGame boardgame;
-  private int currentPlayerIndex;
   private ArrayList<String> playerColors = new ArrayList<>();
 
-
-  public TrivialPursuitGUI() {
-    controller = new TrivialPursuitController(this);
-    questionController = new QuestionController(controller);
+  public TrivialPursuitGUI(TrivialPursuitController controller) {
+    this.controller = controller;
   }
 
-  public Scene createScene() {
-    QuestionGUI questionGUI = new QuestionGUI(questionController);
-    TileActionAdder tileActionAdder = new TileActionAdder(questionGUI);
-
-    /* File paths */
-    String playerFileName = controller.getPlayerFile();
-    String boardFileName = controller.getBoardFile();
-
-    /* Create board */
-    boardgame = controller.getBoardgame();
-    boardgame.createBoard(boardFileName, tileActionAdder);
-
-    /* Create dice */
-    boardgame.createDice(boardFileName);
-
-    Board board = boardgame.getBoard();
-    players = controller.getPlayers();
+  public void show(Stage primaryStage) {
+    primaryStage.setTitle("Trivial Pursuit");
 
     /* Sidebar */
-    VBox sideBar = new VBox();
+    VBox sideBar = new VBox(20);
     sideBar.setPrefWidth(200);
     sideBar.setStyle("-fx-background-color:rgb(148, 148, 148); -fx-padding: 10;");
 
@@ -75,6 +50,7 @@ public class TrivialPursuitGUI {
 
     Label activePlayersLabel = new Label("Active players");
     activePlayerListView = new ListView<>();
+    activePlayerListView.setPrefHeight(4*32);
 
     sideBar.getChildren().addAll(new Label("Controls"),
                                   newGameButton, 
@@ -83,17 +59,35 @@ public class TrivialPursuitGUI {
                                   activePlayerListView,
                                   backButton);
 
-    /* Main content area */
-    Pane mainArea = new Pane();
-    mainArea.setStyle("-fx-background-color:rgb(235, 235, 235)");
+    /* Board grid */
+    GridPane boardGrid = createBoardGrid();
+    ScrollPane scrollPane = new ScrollPane(boardGrid);
+    scrollPane.setFitToWidth(true);
+    scrollPane.setFitToHeight(true);
 
-    /* Boardgrid */
+    /* Layout */
+    BorderPane root = new BorderPane();
+    root.setLeft(sideBar);
+    root.setCenter(scrollPane);
+
+    Scene scene = new Scene(root, 1280, 720);
+    primaryStage.setScene(scene);
+    primaryStage.show();
+
+    /* Buttons */
+    newGameButton.setOnAction(e -> controller.handleNewGame());
+    rollDiceButton.setOnAction(e -> controller.handleRollDice());
+    backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
+  }
+
+  private GridPane createBoardGrid() {
     GridPane boardGrid = new GridPane();
     boardGrid.setHgap(5);
     boardGrid.setVgap(5);
     boardGrid.setStyle("-fx-background-color: rgb(235, 235, 235);");
 
     int tileSize = 70;
+    Board board = controller.getBoardgame().getBoard();
 
     for (Tile tile : board.getTiles().values()) {
       int tileID = tile.getTileID();
@@ -130,6 +124,7 @@ public class TrivialPursuitGUI {
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
 
+        /* Add color to tiles */
         if (tile.getLandAction() != null && tile.getLandAction() instanceof QuestionAction questionAction) {
           String category = questionAction.getCategory();
           if (category.equals("Art and literature")) {
@@ -149,37 +144,7 @@ public class TrivialPursuitGUI {
         boardGrid.add(tilePane, column, row);
       }
     }
-    ScrollPane scrollPane = new ScrollPane(boardGrid);
-    scrollPane.setFitToWidth(true);
-    scrollPane.setFitToHeight(true);
-
-    /* Layout */
-    BorderPane root = new BorderPane();
-    root.setLeft(sideBar);
-    root.setCenter(mainArea);
-    root.setCenter(scrollPane);
-
-    /* Players */
-    playerColors.add("red");
-    playerColors.add("blue");
-    playerColors.add("yellow");
-    playerColors.add("green");
-
-    /* Dice */
-
-    /* New game button */
-    newGameButton.setOnAction(e -> controller.handleNewGame());
-
-    /* Roll dice button */
-    rollDiceButton.setOnAction(e -> controller.handleRollDice());
-    
-    /* Back button */
-    backButton.setOnAction(e -> controller.handleBackButton());
-
-    // BoardGameApp runBoard = new BoardGameApp(playerFileName, boardFileName, boardgame);
-    // runBoard.startGame(playerFileName, boardFileName); 
-
-    return new Scene(root, 1280, 720);
+    return boardGrid;
   }
 
   public void updatePlayerList(List<Player> players) {
@@ -195,6 +160,11 @@ public class TrivialPursuitGUI {
     }
 
     /* Add players to tiles */
+    /* Players colors*/
+    playerColors.add("red");
+    playerColors.add("blue");
+    playerColors.add("yellow");
+    playerColors.add("green");
     int i = 0;
     for (Player player : players) {
       Tile tile = player.getCurrentTile();

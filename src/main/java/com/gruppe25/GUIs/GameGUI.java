@@ -1,27 +1,32 @@
 package com.gruppe25.GUIs;
 
-import javafx.application.Application;
+import com.gruppe25.Controllers.MainMenuController;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class GameGUI extends Application {
+public class GameGUI {
 
-  private static Stage mainStage;
+  private MainMenuController mainMenuController;
+  private Stage mainStage;
+
+  public GameGUI(MainMenuController mainMenuController) {
+    this.mainMenuController = mainMenuController;
+  }
   
-  @Override
   public void start(Stage primaryStage) {
-    mainStage = primaryStage;
-    mainMenu();
+    this.mainStage = primaryStage;
+    showMainMenu();
   }
 
-  public static void mainMenu() {
+  public void showMainMenu() {
     Button snakeLadderButton = new Button("Snakes and Ladders");
     Button trivialPursuitButton = new Button("Trivial Pursuit");
 
-    snakeLadderButton.setOnAction(e -> startGame("snakeLadder"));
-    trivialPursuitButton.setOnAction(e -> startGame("trivialPursuit"));
+    snakeLadderButton.setOnAction(e -> mainMenuController.startGame("snakeLadder", mainStage));
+    trivialPursuitButton.setOnAction(e -> mainMenuController.startGame("trivialPursuit", mainStage));
 
     HBox hbox = new HBox(20, snakeLadderButton, trivialPursuitButton);
     hbox.setStyle("-fx-alignment:center");
@@ -30,22 +35,5 @@ public class GameGUI extends Application {
     mainStage.setTitle("Choose a boardgame");
     mainStage.setScene(selectionScene);
     mainStage.show();
-  }
-
-  private static void startGame(String gameType) {
-    switch(gameType) {
-      case "snakeLadder":
-        SnakeLadderGUI snakeLadderGUI = new SnakeLadderGUI();
-        mainStage.setScene(snakeLadderGUI.createScene());
-        break;
-       case "trivialPursuit":
-       TrivialPursuitGUI trivialPursuitGUI = new TrivialPursuitGUI();
-        mainStage.setScene(trivialPursuitGUI.createScene());
-        break;
-    }
-  }
-
-  public static void main(String[] args) {
-    launch(args);
   }
 }
