@@ -86,7 +86,6 @@ class ModelTests {
 
         tile1.setLandAction(p -> called[0] = true);
         tile1.landPlayer(player);
-
         assertTrue(called[0], "landPlayer should trigger the TileAction.");
     }
 
@@ -101,7 +100,6 @@ class ModelTests {
         QuestionHandler testHandler = (player, category) -> calledCategory[0] = category;
         QuestionAction action = new QuestionAction("History", "Answer a history question.", testHandler);
         action.perform(player);
-    
         assertEquals("History", calledCategory[0], "QuestionHandler should be called with correct category.");
     }
 

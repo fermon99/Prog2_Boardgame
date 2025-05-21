@@ -27,7 +27,6 @@ class ControllerTests {
         MainMenuController controller = new MainMenuController(null);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-
         controller.startGame("unknownGame", null);
         String output = outContent.toString().trim();
         assertTrue(output.contains("Unknown game"), "Should print 'Unknown game...'.");
@@ -37,7 +36,6 @@ class ControllerTests {
     void testCorrectAnswerReturnsTrue() throws Exception {
         QuestionController controller = new QuestionController(trivialController);
         Question question = new Question("Q", Arrays.asList("A", "B", "C"), "A");
-
         Method checkAnswer = QuestionController.class.getDeclaredMethod("checkAnswer", Question.class, String.class);
         checkAnswer.setAccessible(true);
         boolean result = (boolean) checkAnswer.invoke(controller, question, "A");
@@ -48,7 +46,6 @@ class ControllerTests {
     void testIncorrectAnswerReturnsFalse() throws Exception {
         QuestionController controller = new QuestionController(trivialController);
         Question question = new Question("Q", Arrays.asList("A", "B", "C"), "A");
-
         Method checkAnswer = QuestionController.class.getDeclaredMethod("checkAnswer", Question.class, String.class);
         checkAnswer.setAccessible(true);
         boolean result = (boolean) checkAnswer.invoke(controller, question, "B");
@@ -60,9 +57,7 @@ class ControllerTests {
     void testSnakeWithoutPlayersPrintsMessage() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-
         snakeController.handleRollDice();
-
         assertTrue(outContent.toString().contains("No players are selected"));
     }
 
