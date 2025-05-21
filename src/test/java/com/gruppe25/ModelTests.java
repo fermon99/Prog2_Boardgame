@@ -31,7 +31,7 @@ class ModelTests {
         int result = dice.roll();
         int roll1 = dice.getDie(1);
         int roll2 = dice.getDie(2);
-        assertEquals(result, roll1 + roll2);
+        assertEquals(result, roll1 + roll2, "Should show that the resulting values are correct, checking dice functionality.");
     }
 
     @Test
