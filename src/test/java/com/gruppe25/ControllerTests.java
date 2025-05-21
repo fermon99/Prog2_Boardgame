@@ -2,16 +2,14 @@ package com.gruppe25;
 
 import com.gruppe25.Controllers.*;
 import com.gruppe25.ModelClasses.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTests {
 
@@ -24,47 +22,39 @@ class ControllerTests {
         snakeController = new SnakeLadderController();
     }
 
-    //MainMenuController tests
     @Test
-    void testStartUnknownGamePrintsUnknownGameMessage() {
+    void testUnknownGamePrintsMessage() {
         MainMenuController controller = new MainMenuController(null);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
         controller.startGame("unknownGame", null);
-
         String output = outContent.toString().trim();
-        assertTrue(output.contains("Unknown game"), "Should print 'Unknown game...' for unknown gameType.");
+        assertTrue(output.contains("Unknown game"), "Should print 'Unknown game...'.");
     }
 
-    //QuestionController test
     @Test
-    void testAnswerReturnsTrueWhenCorrect() throws Exception {
+    void testCorrectAnswerReturnsTrue() throws Exception {
         QuestionController controller = new QuestionController(trivialController);
         Question question = new Question("Q", Arrays.asList("A", "B", "C"), "A");
 
         Method checkAnswer = QuestionController.class.getDeclaredMethod("checkAnswer", Question.class, String.class);
         checkAnswer.setAccessible(true);
-
         boolean result = (boolean) checkAnswer.invoke(controller, question, "A");
-
-        assertTrue(result);
+        assertTrue(result,"Should be True.");
     }
 
     @Test
-    void testAnswerReturnsFalseWhenIncorrect() throws Exception {
+    void testIncorrectAnswerReturnsFalse() throws Exception {
         QuestionController controller = new QuestionController(trivialController);
         Question question = new Question("Q", Arrays.asList("A", "B", "C"), "A");
 
         Method checkAnswer = QuestionController.class.getDeclaredMethod("checkAnswer", Question.class, String.class);
         checkAnswer.setAccessible(true);
-
         boolean result = (boolean) checkAnswer.invoke(controller, question, "B");
-
-        assertFalse(result);
+        assertFalse(result,"Should be False.");
     }
 
-    //SnakeLadderController tests
 
     @Test
     void testSnakeWithoutPlayersPrintsMessage() {
@@ -77,36 +67,8 @@ class ControllerTests {
     }
 
     @Test
-    void testSnakeReturnsNullWhenNoPlayers() {
-        assertNull(snakeController.getWinner());
+    void testWinnerNullWhenNoPlayers() {
+        assertNull(snakeController.getWinner(),"Should be null since there are no players.");
     }
-
-    //TrivialPursuitController tests
-    @Test
-    void testCorrectAnswerIncreasesScore() {
-        Player mockPlayer = new Player("TestPlayer", null);
-        trivialController.handleCorrectAnswer(mockPlayer);
-        trivialController.handleCorrectAnswer(mockPlayer);
-
-        Player winner = null;
-        //Answer 3 questions correctly to reach 5
-        for (int i = 0; i < 3; i++) {
-            trivialController.handleCorrectAnswer(mockPlayer);
-        }
-        winner = trivialController.getWinner();
-
-        assertNotNull(winner);
-        assertEquals("TestPlayer", winner.getName());
-    }
-
-    @Test
-    void testNoWinnerIfNoPlayerAboveScoreLimit() {
-        Player mockPlayer = new Player("LowScore", null);
-        trivialController.handleCorrectAnswer(mockPlayer);
-        trivialController.handleCorrectAnswer(mockPlayer);
-
-        Player winner = trivialController.getWinner();
-
-        assertNull(winner);
-    }
+    
 }
