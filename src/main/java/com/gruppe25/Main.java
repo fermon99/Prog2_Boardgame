@@ -1,17 +1,22 @@
 package com.gruppe25;
 
-public class Main {
-    public static void main(String[] args) {
-        BoardGame boardgame = new BoardGame();
+import com.gruppe25.Controllers.MainMenuController;
+import com.gruppe25.GUIs.GameGUI;
 
-        boardgame.addPlayer(new Player("Filip"));
-        boardgame.addPlayer(new Player("Bot 1"));
-        boardgame.addPlayer(new Player("Bot 2"));
-        boardgame.addPlayer(new Player("Bot 3"));
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-        boardgame.createBoard(100);//the basic board should be 90 tiles
-        boardgame.createDice(2);
+public class Main extends Application {
 
-        boardgame.play();
-    }
+  @Override
+  public void start(Stage primaryStage) {
+    MainMenuController mainMenuController = new MainMenuController(null);
+    GameGUI gameGUI = new GameGUI(mainMenuController);
+    mainMenuController.setGUI(gameGUI);
+    gameGUI.start(primaryStage);
+  }
+
+  public static void main(String[] args) {
+    launch(args);
+  }
 }

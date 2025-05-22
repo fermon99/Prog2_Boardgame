@@ -1,7 +1,9 @@
-package com.gruppe25;
+package com.gruppe25.ModelClasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/* Class for making a set of dice based on amount for boardgame */
 
 public class Dice {
   private final List<Die> dice;
@@ -13,6 +15,7 @@ public class Dice {
     }
   }
 
+  /* Method for rolling all dice */
   public int roll() {
     int result = 0;
     for (Die die : dice) {
@@ -21,6 +24,7 @@ public class Dice {
     return result;
   }
 
+  /* Getters */
   public int getDie(int dieNumber) {
     return dice.get(dieNumber-1).getValue();
   }

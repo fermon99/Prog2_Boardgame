@@ -1,0 +1,89 @@
+{
+  "BoardgameName": "Snakes and Ladders",
+  "Description": "A classic Snakes and Ladders boardgame with five ladders and five snakes",
+  "numberOfTiles": 90,
+  "loopableBoard": "false",
+  "numberOfDice": 2,
+  "actionTiles": [
+    {
+      "tileId": 24,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 5,
+        "description": "Snake from 24 to 5"
+      }
+    },
+    {
+      "tileId": 33,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 3,
+        "description": "Snake from 33 to 3"
+      }
+    },
+    {
+      "tileId": 53,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 41,
+        "description": "Snake from 53 to 41"
+      }
+    },
+    {
+      "tileId": 64,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 27,
+        "description": "Snake from 64 to 27"
+      }
+    },
+    {
+      "tileId": 88,
+      "action": {
+        "actionType": "Snake",
+        "destinationTileId": 70,
+        "description": "Snake from 88 to 70"
+      }
+    },
+    {
+      "tileId": 2,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 40,
+        "description": "Ladder from 2 to 40"
+      }
+    },
+    {
+      "tileId": 8,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 16,
+        "description": "Ladder from 8 to 16"
+      }
+    },
+    {
+      "tileId": 36,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 52,
+        "description": "Ladder from 36 to 52"
+      }
+    },
+    {
+      "tileId": 47,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 66,
+        "description": "Ladder from 47 to 66"
+      }
+    },
+    {
+      "tileId": 68,
+      "action": {
+        "actionType": "Ladder",
+        "destinationTileId": 86,
+        "description": "Ladder from 68 to 86"
+      }
+    }
+  ]
+}

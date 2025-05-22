@@ -1,0 +1,335 @@
+{
+  "BoardgameName": "Trivial Pursuit",
+  "Description": "A simplified version of the classic quiz game with questions from different categories",
+  "numberOfTiles": 36,
+  "loopableBoard": "true",
+  "numberOfDice": 1,
+  "actionTiles": [
+    {
+      "tileId": 1,
+      "action": {
+        "actionType": "Question",
+        "category": "Art and literature",
+        "description": "Question tile with the category Art & literature"
+      }
+    },
+    {
+      "tileId": 10,
+      "action": {
+        "actionType": "Question",
+        "category": "Art and literature",
+        "description": "Question tile with the category Art & literature"
+      }
+    },
+    {
+      "tileId": 19,
+      "action": {
+        "actionType": "Question",
+        "category": "Art and literature",
+        "description": "Question tile with the category Art & literature"
+      }
+    },
+    {
+      "tileId": 28,
+      "action": {
+        "actionType": "Question",
+        "category": "Art and literature",
+        "description": "Question tile with the category Art & literature"
+      }
+    },
+    {
+      "tileId": 2,
+      "action": {
+        "actionType": "Question",
+        "category": "Science and nature",
+        "description": "Question tile with the category Science & nature"
+      }
+    },
+    {
+      "tileId": 11,
+      "action": {
+        "actionType": "Question",
+        "category": "Science and nature",
+        "description": "Question tile with the category Science & nature"
+      }
+    },
+    {
+      "tileId": 20,
+      "action": {
+        "actionType": "Question",
+        "category": "Science and nature",
+        "description": "Question tile with the category Science & nature"
+      }
+    },
+    {
+      "tileId": 29,
+      "action": {
+        "actionType": "Question",
+        "category": "Science and nature",
+        "description": "Question tile with the category Science & nature"
+      }
+    },
+    {
+      "tileId": 3,
+      "action": {
+        "actionType": "Question",
+        "category": "Sports and leisure",
+        "description": "Question tile with the category Sports & leisure"
+      }
+    },
+    {
+      "tileId": 12,
+      "action": {
+        "actionType": "Question",
+        "category": "Sports and leisure",
+        "description": "Question tile with the category Sports & leisure"
+      }
+    },
+    {
+      "tileId": 21,
+      "action": {
+        "actionType": "Question",
+        "category": "Sports and leisure",
+        "description": "Question tile with the category Sports & leisure"
+      }
+    },
+    {
+      "tileId": 30,
+      "action": {
+        "actionType": "Question",
+        "category": "Sports and leisure",
+        "description": "Question tile with the category Sports & leisure"
+      }
+    },
+    {
+      "tileId": 4,
+      "action": {
+        "actionType": "Question",
+        "category": "Geography",
+        "description": "Question tile with the category Geography"
+      }
+    },
+    {
+      "tileId": 13,
+      "action": {
+        "actionType": "Question",
+        "category": "Geography",
+        "description": "Question tile with the category Geography"
+      }
+    },
+    {
+      "tileId": 22,
+      "action": {
+        "actionType": "Question",
+        "category": "Geography",
+        "description": "Question tile with the category Geography"
+      }
+    },
+    {
+      "tileId": 31,
+      "action": {
+        "actionType": "Question",
+        "category": "Geography",
+        "description": "Question tile with the category Geography"
+      }
+    },
+    {
+      "tileId": 5,
+      "action": {
+        "actionType": "Question",
+        "category": "Entertainment",
+        "description": "Question tile with the category Entertainment"
+      }
+    },
+    {
+      "tileId": 14,
+      "action": {
+        "actionType": "Question",
+        "category": "Entertainment",
+        "description": "Question tile with the category Entertainment"
+      }
+    },
+    {
+      "tileId": 23,
+      "action": {
+        "actionType": "Question",
+        "category": "Entertainment",
+        "description": "Question tile with the category Entertainment"
+      }
+    },
+    {
+      "tileId": 32,
+      "action": {
+        "actionType": "Question",
+        "category": "Entertainment",
+        "description": "Question tile with the category Entertainment"
+      }
+    },
+    {
+      "tileId": 6,
+      "action": {
+        "actionType": "Question",
+        "category": "History",
+        "description": "Question tile with the category History"
+      }
+    },
+    {
+      "tileId": 15,
+      "action": {
+        "actionType": "Question",
+        "category": "History",
+        "description": "Question tile with the category History"
+      }
+    },
+    {
+      "tileId": 24,
+      "action": {
+        "actionType": "Question",
+        "category": "History",
+        "description": "Question tile with the category History"
+      }
+    },
+    {
+      "tileId": 33,
+      "action": {
+        "actionType": "Question",
+        "category": "History",
+        "description": "Question tile with the category History"
+      }
+    }
+  ],
+  "questions": {
+    "Art and literature": [
+      {
+        "questionText": "Who painted the Mona Lisa?",
+        "options": [
+          "Leonardo da Vinci",
+          "Vincent van Gogh",
+          "Michelangelo",
+          "Pablo Picasso"
+        ],
+        "correctAnswer": "Leonardo da Vinci"
+      },
+      {
+        "questionText": "Which novel begins with 'Call me Ishmael'?",
+        "options": [
+          "Moby Dick",
+          "The Great Gatsby",
+          "1984",
+          "War and Peace"
+        ],
+        "correctAnswer": "Moby Dick"
+      }
+    ],
+    "Science and nature": [
+      {
+        "questionText": "What is the chemical symbol for water?",
+        "options": [
+          "O2",
+          "H2O",
+          "CO2",
+          "NaCl"
+        ],
+        "correctAnswer": "H2O"
+      },
+      {
+        "questionText": "What planet is known as the Red Planet?",
+        "options": [
+          "Mars",
+          "Venus",
+          "Jupiter",
+          "Saturn"
+        ],
+        "correctAnswer": "Mars"
+      }
+    ],
+    "Sports and leisure": [
+      {
+        "questionText": "In which sport is the term 'love' used?",
+        "options": [
+          "Cricket",
+          "Basketball",
+          "Tennis",
+          "Football"
+        ],
+        "correctAnswer": "Tennis"
+      },
+      {
+        "questionText": "Who won the FIFA World cup in 2014",
+        "options": [
+          "Germany",
+          "Brazil",
+          "Argentina",
+          "Costa Rica"
+        ],
+        "correctAnswer": "Germany"
+      }
+    ],
+    "Geography": [
+      {
+        "questionText": "What is the capital of Australia?",
+        "options": [
+          "Sydney",
+          "Melbourne",
+          "Perth",
+          "Canberra"
+        ],
+        "correctAnswer": "Canberra"
+      },
+      {
+        "questionText": "Which of these countries are completely surrounded by only one other country?",
+        "options": [
+          "Luxembourg",
+          "Andorra",
+          "Uruguay",
+          "Lesotho"
+        ],
+        "correctAnswer": "Lesotho"
+      }
+    ],
+    "Entertainment": [
+      {
+        "questionText": "Which movie features a character named Jack Dawson?",
+        "options": [
+          "Titanic",
+          "Inception",
+          "Avatar",
+          "The Revenant"
+        ],
+        "correctAnswer": "Titanic"
+      },
+      {
+        "questionText": "Who is the creator of the videogame Minecraft?",
+        "options": [
+          "Notch",
+          "Jack Black",
+          "Wirtual",
+          "LocalThunk"
+        ],
+        "correctAnswer": "Notch"
+      }
+    ],
+    "History": [
+      {
+        "questionText": "Who was the first president of the United States?",
+        "options": [
+          "George Washington",
+          "Abraham Lincoln",
+          "John Adams",
+          "Thomas Jefferson"
+        ],
+        "correctAnswer": "George Washington"
+      },
+      {
+        "questionText": "In what year did the events of 9/11 take place?",
+        "options": [
+          "1999",
+          "2005",
+          "2001",
+          "2012"
+        ],
+        "correctAnswer": "2001"
+      }
+    ]
+  }
+}
