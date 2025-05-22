@@ -31,10 +31,6 @@ public class MainMenuController {
     }
   }
 
-  public void exitApplication() {
-    System.exit(0);
-  }
-
   public void setGUI(GameGUI gui) {
     this.gameGUI = gui;
   }
