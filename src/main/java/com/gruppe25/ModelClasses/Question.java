@@ -2,11 +2,15 @@ package com.gruppe25.ModelClasses;
 
 import java.util.List;
 
+/* Class for question objects in Trivial Pursuit
+ * Information about the given question is stored here
+ */
+
 public class Question {
 
-  private String questionText;
-  private List<String> options;
-  private String correctAnswer;
+  private final String questionText;
+  private final List<String> options;
+  private final String correctAnswer;
 
   public Question(String questionText, List<String> options, String correctAnswer) {
     this.questionText = questionText;

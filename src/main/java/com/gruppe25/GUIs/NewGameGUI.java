@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/* View class for 'new game'.
+ * Opens pop-up with player selection.
+ */
 public class NewGameGUI {
   public static List<Player> showAndWait(List<Player> availablePlayers) {
     Stage newGameStage = new Stage();
@@ -20,6 +23,7 @@ public class NewGameGUI {
 
     VBox layout = new VBox(10);
     
+    /* Checkbox for selecting players */
     List<CheckBox> selections = new ArrayList<>();
     for (Player player : availablePlayers) {
       CheckBox selection = new CheckBox(player.getName());
@@ -46,6 +50,7 @@ public class NewGameGUI {
     newGameStage.setScene(scene);
     newGameStage.showAndWait();
 
+    /* Logic for max 4 players per game */
     if (selectedPlayers.size() <= 4) {
       return selectedPlayers;
     } else {

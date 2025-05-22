@@ -4,6 +4,10 @@ import com.gruppe25.GUIs.GameGUI;
 
 import javafx.stage.Stage;
 
+/* Controller class for Main Menu
+ * Handles button presses (choosing game)
+ */
+
 public class MainMenuController {
 
   private GameGUI gameGUI;

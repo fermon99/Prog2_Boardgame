@@ -24,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/* View class for Snakes and Ladders game */
+
 public class TrivialPursuitGUI {
   
   private final TrivialPursuitController controller;
@@ -80,6 +82,7 @@ public class TrivialPursuitGUI {
     backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
   }
 
+  /* Method for creating the visual representation of the board */
   private GridPane createBoardGrid() {
     GridPane boardGrid = new GridPane();
     boardGrid.setHgap(5);
@@ -95,7 +98,7 @@ public class TrivialPursuitGUI {
       int row = 0;
       int column = 0;
 
-      /* Square loop pattern */
+      /* For square loop pattern */
       if (tileID >= 1 && tileID <= 9) {
         row = 0;
         column = (tileID - 1) + 1;
@@ -116,6 +119,7 @@ public class TrivialPursuitGUI {
 
       tilePanes.put(tileID, tilePane);
 
+      /* Start tile */
       if (tileID == 0) {
         Label startLabel = new Label("Start");
         tilePane.getChildren().add(startLabel);
@@ -124,7 +128,7 @@ public class TrivialPursuitGUI {
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
 
-        /* Add color to tiles */
+        /* Coloring the action tiles based on category */
         if (tile.getLandAction() != null && tile.getLandAction() instanceof QuestionAction questionAction) {
           String category = questionAction.getCategory();
           if (category.equals("Art and literature")) {
@@ -165,6 +169,8 @@ public class TrivialPursuitGUI {
     playerColors.add("blue");
     playerColors.add("yellow");
     playerColors.add("green");
+
+    /* Adds color to player markers and places them in each corner of tile */
     int i = 0;
     for (Player player : players) {
       Tile tile = player.getCurrentTile();

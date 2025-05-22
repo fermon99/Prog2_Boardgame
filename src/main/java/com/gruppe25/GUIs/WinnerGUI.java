@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/* View class for pop-up winning screen */
+
 public class WinnerGUI {
 
   private SnakeLadderController controller;

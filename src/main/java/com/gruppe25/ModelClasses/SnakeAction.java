@@ -1,5 +1,7 @@
 package com.gruppe25.ModelClasses;
 
+/* Class for handling the snake action in snakes and ladders */
+
 public class SnakeAction implements TileAction {
   private final int destinationTileID; 
   private final String description;
@@ -9,6 +11,7 @@ public class SnakeAction implements TileAction {
     this.description = description;
   }
 
+  /* Triggers when player lands on a snake tile: get placed on bottom of snake (destination) */
   @Override
   public void perform(Player player) {
     System.out.println(description + "  |  SnakeAction triggered: ");

@@ -1,5 +1,9 @@
 package com.gruppe25.ModelClasses;
 
+/* Class for each player object in the game.
+ * Features key methods for movement and positions
+ */
+
 public class Player {
   private final String name;
   private Tile currentTile;
@@ -22,8 +26,6 @@ public class Player {
       }
       currentTile = currentTile.getNextTile();
     }
-    //currentTile.landPlayer(this);
-    
   }
 
   public String getName() {

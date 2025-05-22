@@ -8,6 +8,13 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
+/* Class for reading .json file.
+ * Using read information to create:
+ *   - Board
+ *   - Dice
+ *   - Questions (all questions are in the .json file for Trivial Pursuit)
+ */
+
 public class BoardReader {
   private static Board board;
   private static Dice dice;
@@ -21,7 +28,7 @@ public class BoardReader {
 
       Board board = new Board();
 
-      /* Add tiles and connect them */
+      /* Adding tiles and connecting them to next tile */
       for (int i = 0; i < boardData.numberOfTiles+1; i++) {
           Tile tile = new Tile(i);
           board.addTiles(tile);
@@ -31,14 +38,17 @@ public class BoardReader {
         Tile next = board.getTile(i+1);
         current.setNextTile(next);
 
+        /* Checking .json file for tile actions and adding them to tile */
         for (Map<String, Object> tileMap : boardData.actionTiles) {
             int tileID = ((Double) tileMap.get("tileId")).intValue();
             Map<String, Object> actionData = (Map<String, Object>) tileMap.get("action");
   
             TileAction tileAction = tileActionAdder.createTileAction(actionData);
             board.getTile(tileID).setLandAction(tileAction);
-          }
         }
+      }
+
+      /* Checks if board is loopable and connecting last tile to first tile if it is (loopableBoard in .json) */
       if (boardData.loopableBoard == true) {
         Tile current = board.getTile(boardData.numberOfTiles);
         current.setNextTile(board.getTile(1));
@@ -58,6 +68,7 @@ public class BoardReader {
       JsonReader reader = new JsonReader(new FileReader(filepath));
       BoardData boardData = gson.fromJson(reader, BoardData.class);
 
+      /* Loading correct amount of dice */
       dice = new Dice(boardData.numberOfDice);
       return dice;
     } catch (Exception e) {
@@ -73,13 +84,14 @@ public class BoardReader {
       JsonReader reader = new JsonReader(new FileReader(filepath));
       QuestionData questionData = gson.fromJson(reader, QuestionData.class);
 
-      List<Question> questionList = questionData.questions.get(category);
+      List<Question> questionList = questionData.questions.get(category); // Makes a list of questions in specified category
 
       if (questionList.isEmpty()) {
         System.out.println("No questions found for " + category);
         return null;
       }
 
+      /* Returns a random question in list of specified category */
       Random random = new Random();
       return questionList.get(random.nextInt(questionList.size()));
     } catch (Exception e) {

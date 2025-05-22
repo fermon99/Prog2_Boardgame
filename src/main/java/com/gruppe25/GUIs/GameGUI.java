@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+/* View class for main menu */
+
 public class GameGUI {
 
   private MainMenuController mainMenuController;
@@ -21,6 +23,7 @@ public class GameGUI {
     showMainMenu();
   }
 
+  /* Adds buttons for selecting games */
   public void showMainMenu() {
     Button snakeLadderButton = new Button("Snakes and Ladders");
     Button trivialPursuitButton = new Button("Trivial Pursuit");

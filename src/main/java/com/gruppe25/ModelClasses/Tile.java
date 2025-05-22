@@ -1,5 +1,7 @@
 package com.gruppe25.ModelClasses;
 
+/* Class for each tile object that makes up the board */
+
 public class Tile {
   private Tile nextTile;
   private final int tileID;
@@ -9,6 +11,7 @@ public class Tile {
     this.tileID = tileID;
   }
 
+  /* Registers a player landing on this tile. If action tile -> perform (TileAction) */
   public void landPlayer(Player player) {
     if (landAction != null) {
       landAction.perform(player);
@@ -17,10 +20,6 @@ public class Tile {
 
   public void setLandAction(TileAction action) {
     this.landAction = action;
-  }
-
-  public void leavePlayer(Player player) {
-
   }
 
   public void setNextTile(Tile nextTile) {

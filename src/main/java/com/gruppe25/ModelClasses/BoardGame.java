@@ -3,6 +3,9 @@ package com.gruppe25.ModelClasses;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Class for handling creating / starting the playable boardgame
+ */
+
 public class BoardGame {
   private Board board;
   private Player currentPlayer;
@@ -32,7 +35,7 @@ public class BoardGame {
     createDice(filepath);
   }
   
-
+  /* Used for simulation purposes only, not in actual application */
   public void play() {
     if (players.isEmpty()) {
       System.out.println("No players are playing...");

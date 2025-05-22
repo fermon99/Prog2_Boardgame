@@ -4,6 +4,10 @@ import java.util.List;
 
 import static com.gruppe25.ModelClasses.PlayerReader.readPlayersFromCSV;
 
+/* This class was onlu used during development for testing logic while the boardgrid and game was no created
+ * It was used as a simulation of how the snakes and ladders game would be played
+ */
+
 public class BoardGameApp {
   String playerFileName;
   String boardFileName;

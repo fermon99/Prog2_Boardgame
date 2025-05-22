@@ -1,5 +1,9 @@
 package com.gruppe25.ModelClasses;
 
+/* Used for testing and simulation
+ * (No longer in use)
+ */
+
 public class SnakeLadder {
   private final Tile startTile;
   private final Tile endTile;

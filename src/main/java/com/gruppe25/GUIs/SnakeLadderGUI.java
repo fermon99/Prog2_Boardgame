@@ -23,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/* View class for Snakes and Ladders game */
+
 public class SnakeLadderGUI {
 
   private SnakeLadderController controller;
@@ -76,6 +78,7 @@ public class SnakeLadderGUI {
     backButton.setOnAction(e -> controller.handleBackButton(primaryStage));
   }
 
+  /* Method for creating the visual representation of the board */
   private GridPane createBoardGrid() {
     GridPane boardGrid = new GridPane();
     boardGrid.setHgap(5);
@@ -92,7 +95,7 @@ public class SnakeLadderGUI {
       int row = (tileID - 1 )/ columns;
       int column = (tileID - 1) % columns;
 
-      /* For zig-zag pattern */
+      /* Zig-zag pattern logic */
       if (row % 2 == 1) {
         column = columns - 1 - column;
       }
@@ -103,14 +106,16 @@ public class SnakeLadderGUI {
 
       tilePanes.put(tileID, tilePane);
 
+      /* Start tile */
       if (tileID == 0) {
         Label startLabel = new Label("Start");
         tilePane.getChildren().add(startLabel);
         boardGrid.add(tilePane, 0, 10);
-      } else {
+      } else { 
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
 
+        /* Coloring the action tiles based on action */
         if (tile.getLandAction() != null) {
           String type = tile.getLandAction().getClass().getSimpleName();
           if (type.equals("LadderAction")) {
@@ -144,6 +149,7 @@ public class SnakeLadderGUI {
       playerColors.add("yellow");
       playerColors.add("green");
 
+      /* Adds color to player markers and places them in each corner of tile */
       int i = 0;
       for (Player player : players) {
         Tile tile = player.getCurrentTile();

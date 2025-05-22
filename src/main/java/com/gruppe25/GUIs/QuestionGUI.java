@@ -16,19 +16,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class QuestionGUI /*implements QuestionHandler*/ {
+/* View class for pop-up question screen */
+
+public class QuestionGUI {
 
   private static QuestionController controller;
 
   public QuestionGUI(QuestionController controller) {
     this.controller = controller;
   }
-
-  /*@Override
-  public void handleQuestion(Player player, String category) {
-    Question question = controller.getRandomQuestion(category);
-    question(player, category, question);
-  } */
 
   public static String question(Player player, String category, Question question) {
     Stage questionStage = new Stage();
@@ -38,9 +34,11 @@ public class QuestionGUI /*implements QuestionHandler*/ {
     VBox layout = new VBox(10);
     layout.setAlignment(Pos.CENTER);
 
+    /* Questioncard text */
     Label questionTitle = new Label(player + ", you landed on the " + category + " category!");
     Label questionText = new Label(question.getQuestionText());
 
+    /* Displaying buttons with answer options */
     HBox optionLayout = new HBox(20);
     optionLayout.setAlignment(Pos.CENTER);
     List<String> options = question.getOptions();
@@ -56,7 +54,7 @@ public class QuestionGUI /*implements QuestionHandler*/ {
     Scene scene = new Scene(layout, 600, 300);
     questionStage.setScene(scene);
 
-    /* Update answer */
+    /* Updates returnable result based on option pressed */
     AtomicReference<String> selectedAnswer = new AtomicReference<>();
 
     option1.setOnAction(e ->  {

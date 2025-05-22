@@ -16,6 +16,11 @@ import com.gruppe25.ModelClasses.TileActionAdder;
 
 import javafx.stage.Stage;
 
+/* Controller class for handling the Trivial Pursuit game:
+ * Handles buttons like roll dice, new game, and back to main menu.
+ * Handles win condition and moving players.
+ */
+
 public class TrivialPursuitController {
   
   private final BoardGame boardgame;
@@ -42,11 +47,13 @@ public class TrivialPursuitController {
     this.gui = new TrivialPursuitGUI(this);
   }
 
+  /* Starting the gui */
   public void start(Stage stage) {
     this.stage = stage;
     gui.show(stage);
   }
 
+  /* New game button -> pop-up gui -> select players */
   public void handleNewGame() {
     List<Player> availablePlayers = PlayerReader.readPlayersFromCSV(playerFileName, boardgame);
     this.players = NewGameGUI.showAndWait(availablePlayers);
@@ -57,6 +64,7 @@ public class TrivialPursuitController {
     }
   }
 
+  /* Setting player ids and placing them on start-tile */
   private void initializePlayers(List<Player> players) {
     int i = 0;
       for (Player player : players) {
@@ -70,11 +78,13 @@ public class TrivialPursuitController {
       gui.updatePlayerPositions(players);
   }
 
+  /* Handles scoring if correct answer */
   public void handleCorrectAnswer(Player player) {
     playerScores.put(player, playerScores.getOrDefault(player, 0) + 1);
     System.out.println("Correct answer - player score is now " + playerScores.get(player));
   }
 
+  /* Handles players turn -> rolling dice and checks if player trigger win condition */
   public void handleRollDice() {
     if (players == null || players.isEmpty()) {
       System.out.println("No players are selected...");
@@ -88,7 +98,6 @@ public class TrivialPursuitController {
     movePlayer(currentPlayer, roll);
     gui.updatePlayerPositions(players);
 
-    /* Win condition */
     if (getWinner() != null) {
       handleWin(getWinner());
       return;
@@ -106,6 +115,7 @@ public class TrivialPursuitController {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
   }
 
+  /* Win condition */
   public Player getWinner() {
     if (players == null) return null;
 
@@ -117,6 +127,7 @@ public class TrivialPursuitController {
     return null;
   }
 
+  /* pop-up winner screen (with main menu or new game buttons) */
   public void handleWin(Player winner) {
     int choice = WinnerGUI.showAndWait(winner);
     if (choice == 1) {
