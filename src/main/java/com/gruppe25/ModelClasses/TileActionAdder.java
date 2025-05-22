@@ -11,6 +11,7 @@ public class TileActionAdder {
     this.questionHandler = questionHandler;
   }
 
+  /* Adds action tiles to tiles based on data from boardreader */
   public TileAction createTileAction(Map<String, Object> actionData) {
     String actionType = (String) actionData.get("actionType");
     String description = (String) actionData.get("description");

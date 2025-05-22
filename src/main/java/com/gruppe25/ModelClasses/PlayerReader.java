@@ -11,6 +11,8 @@ import com.opencsv.exceptions.CsvValidationException;
 /* Class for reading players from a .csv file */
 
 public class PlayerReader {
+
+  /* Reads .csv-file and adds players into player list */
   public static List<Player> readPlayersFromCSV(String filename, BoardGame boardGame) {
     List<Player> players = new ArrayList<>();
 

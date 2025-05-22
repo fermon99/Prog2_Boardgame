@@ -106,11 +106,13 @@ public class TrivialPursuitController {
     nextPlayer();
   }
 
+  /* Moves player based on dice roll */
   private void movePlayer(Player player, int roll) {
     player.move(roll);
     player.getCurrentTile().landPlayer(player);
   }
 
+  /* Increments to next player (in a loop) */
   private void nextPlayer() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
   }
@@ -137,6 +139,7 @@ public class TrivialPursuitController {
     }
   }
 
+  /* Handles if player wants to go back to main menu */
   public void handleBackButton(Stage stage) {
     MainMenuController mainMenuController = new MainMenuController(null);
     GameGUI gameGUI = new GameGUI(mainMenuController);
@@ -144,10 +147,12 @@ public class TrivialPursuitController {
     gameGUI.start(stage);
   }
 
+  /* Setters */
   public void setGUI(TrivialPursuitGUI gui) {
     this.gui = gui;
   }
 
+  /* Getters */
   public String getPlayerFile() {
     return playerFileName;
   }

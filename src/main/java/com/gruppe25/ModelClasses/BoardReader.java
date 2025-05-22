@@ -20,6 +20,7 @@ public class BoardReader {
   private static Dice dice;
   private static Question question;
 
+  /* Uses JsonReader to read .json file and create a board based on the data */
   public static Board loadBoard(String filepath, TileActionAdder tileActionAdder) {
     try {
       Gson gson = new Gson();
@@ -61,7 +62,8 @@ public class BoardReader {
       return board;
     }
   }
-
+ 
+  /* Uses JsonReader to create a set of dice based on the data */
   public static Dice loadDice(String filepath, BoardGame boardGame) {
     try {
       Gson gson = new Gson();
@@ -78,6 +80,7 @@ public class BoardReader {
     }
   }
 
+  /* Uses JsonReader to load in questions from .json file */
   public static Question loadQuestion(String filepath, String category) {
     try {
       Gson gson = new Gson();

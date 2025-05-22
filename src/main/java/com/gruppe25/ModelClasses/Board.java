@@ -13,10 +13,12 @@ public class Board {
     tiles = new HashMap<>();
   }
 
+  /* Adding tiles to board map */
   public void addTiles(Tile tile) {
     tiles.put(tile.getTileID(), tile);
   }
 
+  /* getters */
   public Tile getTile(int tileID) {
     return tiles.get(tileID);
   }

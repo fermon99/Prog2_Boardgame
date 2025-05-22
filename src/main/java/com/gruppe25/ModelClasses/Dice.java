@@ -24,6 +24,7 @@ public class Dice {
     return result;
   }
 
+  /* Getters */
   public int getDie(int dieNumber) {
     return dice.get(dieNumber-1).getValue();
   }

@@ -16,6 +16,7 @@ public class MainMenuController {
     this.gameGUI = gameGUI;
   }
 
+  /* Starts a boardgame based on selected input */
   public void startGame(String gameType, Stage stage) {
     switch(gameType) {
       case "snakeLadder":
@@ -31,6 +32,7 @@ public class MainMenuController {
     }
   }
 
+  /* Setters */
   public void setGUI(GameGUI gui) {
     this.gameGUI = gui;
   }

@@ -18,6 +18,7 @@ public class Question {
     this.correctAnswer = correctAnswer;
   }
 
+  /* Getters */
   public String getQuestionText() {
     return questionText;
   }

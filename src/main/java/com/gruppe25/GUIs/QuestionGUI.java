@@ -26,6 +26,7 @@ public class QuestionGUI {
     this.controller = controller;
   }
 
+  /* Creates pop-up-window for question card and returns the players answer */
   public static String question(Player player, String category, Question question) {
     Stage questionStage = new Stage();
     questionStage.initModality(Modality.APPLICATION_MODAL);

@@ -15,6 +15,7 @@ public class Die {
     return lastRolledValue;
   }
 
+  /* Getters */
   public int getValue() {
     return lastRolledValue;
   }

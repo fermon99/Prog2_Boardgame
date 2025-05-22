@@ -15,10 +15,12 @@ public class Player {
     this.boardGame = boardGame;
   }
 
+  /* Places the player on given tile */
   public void placeOnTile(Tile tile) {
     currentTile = tile;
   }
 
+  /* Moves player from currentTile to destination tile in steps (based on rolled dice) */
   public void move(int steps) {
     for (int i = 0; i < steps; i++) {
       if (currentTile.getNextTile() == null) {
@@ -28,6 +30,7 @@ public class Player {
     }
   }
 
+  /* Getters */
   public String getName() {
     return name;
   }
@@ -44,6 +47,7 @@ public class Player {
     return playerID;
   }
 
+  /* Setters */
   public void setPlayerID(int playerID) {
     this.playerID = playerID;
   }

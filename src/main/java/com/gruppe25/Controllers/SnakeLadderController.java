@@ -31,6 +31,8 @@ public class SnakeLadderController {
   /* File paths */
   private static final String playerFileName = "src/main/resources/players/SnakeLadderPlayers.csv";
   private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgame.json";
+  //private static final String boardFileName = "src/main/resources/boards/SnakeLadderBoardgameAlt.json"; // Alternate layout
+
 
   public SnakeLadderController() {
     this.boardgame = new BoardGame();
@@ -91,11 +93,13 @@ public class SnakeLadderController {
     nextPlayer();
   }
 
+  /* Moves player based on dice roll */
   private void movePlayer(Player player, int roll) {
     player.move(roll);
     player.getCurrentTile().landPlayer(player);
   }
 
+  /* Increments to next player (in a loop) */
   private void nextPlayer() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
   }
@@ -122,6 +126,7 @@ public class SnakeLadderController {
     }
   }
   
+  /* Handles if player wants to go back to main menu */
   public void handleBackButton(Stage stage) {
     MainMenuController mainMenuController = new MainMenuController(null);
     GameGUI gameGUI = new GameGUI(mainMenuController);
@@ -129,10 +134,12 @@ public class SnakeLadderController {
     gameGUI.start(stage);
   }
 
+  /* Setters */
   public void setGUI(SnakeLadderGUI gui) {
     this.gui = gui;
   }
 
+  /* Getters */
   public String getPlayerFile() {
     return playerFileName;
   }

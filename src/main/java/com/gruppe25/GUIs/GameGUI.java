@@ -18,12 +18,13 @@ public class GameGUI {
     this.mainMenuController = mainMenuController;
   }
   
+  /* Sets the stage and show main menu */
   public void start(Stage primaryStage) {
     this.mainStage = primaryStage;
     showMainMenu();
   }
 
-  /* Adds buttons for selecting games */
+  /* Creates the layout of the main menu GUI */
   public void showMainMenu() {
     Button snakeLadderButton = new Button("Snakes and Ladders");
     Button trivialPursuitButton = new Button("Trivial Pursuit");

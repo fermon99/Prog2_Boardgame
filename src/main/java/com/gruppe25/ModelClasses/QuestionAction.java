@@ -13,12 +13,14 @@ public class QuestionAction implements TileAction {
     this.questionHandler = questionHandler;
   }
 
+  /* Triggers when player lands on a question tile: player is faced with question corresponding to category */
   @Override
   public void perform(Player player) {
     System.out.println("  |  QuestionAction triggered: " + description);
     questionHandler.handleQuestion(player, category); // QuestionHandler uses current player and landed category (each tile has a category)
   }
 
+  /* Getters */
   public String getCategory() {
     return category;
   }

@@ -16,26 +16,28 @@ public class BoardGame {
     players = new ArrayList<>();
   }
 
+  /* Adding player to player list */
   public void addPlayer(Player player) {
     players.add(player);
   }
 
-  
+  /* creating a board using boardreader */
   public void createBoard(String filepath, TileActionAdder tileActionAdder) {
     board = BoardReader.loadBoard(filepath, tileActionAdder);
   }
   
-
+  /* creating dice using boardreader */
   public void createDice(String filepath) {
     dice = BoardReader.loadDice(filepath, this);
   }
 
+  /* Initialize boardgame (board and dice) */
   public void init(String filepath, TileActionAdder tileActionAdder) {
     createBoard(filepath, tileActionAdder);
     createDice(filepath);
   }
   
-  /* Used for simulation purposes only, not in actual application */
+  /* Used for simulation purposes only, not in actual application (ignore method) */
   public void play() {
     if (players.isEmpty()) {
       System.out.println("No players are playing...");
@@ -68,6 +70,7 @@ public class BoardGame {
     System.out.println("The winner is: " + getWinner().getName());
   }
 
+  /* Only used in simulation, not in actual application (ignore method) */
   public Player getWinner() {
     for (Player player : players) {
       if (player.getCurrentTile().getTileID() == board.getBoardSize() - 1) {
@@ -77,6 +80,7 @@ public class BoardGame {
     return null;  
   }
 
+  /* Getters */
   public Board getBoard() {
     return board;
   }

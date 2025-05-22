@@ -16,6 +16,8 @@ import javafx.stage.Stage;
  * Opens pop-up with player selection.
  */
 public class NewGameGUI {
+
+  /* Creates "new game" pop-up-window and returns selected players */
   public static List<Player> showAndWait(List<Player> availablePlayers) {
     Stage newGameStage = new Stage();
     newGameStage.initModality(Modality.APPLICATION_MODAL);

@@ -38,6 +38,7 @@ public class TrivialPursuitGUI {
     this.controller = controller;
   }
 
+  /* Sets stage for Trivial Pursuit and show the GUI */
   public void show(Stage primaryStage) {
     primaryStage.setTitle("Trivial Pursuit");
 
@@ -151,10 +152,12 @@ public class TrivialPursuitGUI {
     return boardGrid;
   }
 
+  /* Updates player ListView in sidebar */
   public void updatePlayerList(List<Player> players) {
     activePlayerListView.getItems().setAll(players);
   }
 
+  /* Updates player positions visually on the board */
   public void updatePlayerPositions(List<Player> players) {
     /* Removes player from previous position */
     for (StackPane pane : tilePanes.values()) {

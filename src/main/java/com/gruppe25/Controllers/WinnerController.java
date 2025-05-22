@@ -15,6 +15,7 @@ private SnakeLadderController snakeLadderController;
     this.gui = gui;
   }
 
+  /* Handling new game after winner (uses SnakeLadderController but works for winner pop-up-screen in Trivial Pursuit also) */
   public void handleNewSnakeLadderGame() {
     snakeLadderController.handleNewGame();
   }

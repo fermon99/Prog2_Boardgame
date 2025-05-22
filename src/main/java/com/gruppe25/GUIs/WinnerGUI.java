@@ -19,6 +19,7 @@ public class WinnerGUI {
 
   private SnakeLadderController controller;
 
+  /* Class for showing pop-up-screen displaying winner (and options for new game or go back) */
   public static int showAndWait(Player winner) {
     Stage winnerStage = new Stage();
     winnerStage.initModality(Modality.APPLICATION_MODAL);

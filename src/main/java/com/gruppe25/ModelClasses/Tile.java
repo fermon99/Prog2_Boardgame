@@ -18,6 +18,7 @@ public class Tile {
     }
   }
 
+  /* Setters */
   public void setLandAction(TileAction action) {
     this.landAction = action;
   }
@@ -26,6 +27,7 @@ public class Tile {
     this.nextTile = nextTile;
   }
 
+  /* Getters */
   public Tile getNextTile() {
     return nextTile;
   }

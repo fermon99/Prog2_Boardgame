@@ -37,6 +37,7 @@ public class SnakeLadderGUI {
     this.controller = controller;
   }
 
+  /* Sets stage and shows the Snakes and Ladders GUI */
   public void show(Stage primaryStage) {
     /* Sidebar */
     VBox sideBar = new VBox();
@@ -88,6 +89,8 @@ public class SnakeLadderGUI {
     int columns = 9;
     int tileSize = 70;
     Board board = controller.getBoardgame().getBoard();
+    int boardSize = board.getBoardSize();
+    int maxRow = (boardSize - 1) / columns;
 
     for (Tile tile : board.getTiles().values()) {
       int tileID = tile.getTileID();
@@ -110,7 +113,7 @@ public class SnakeLadderGUI {
       if (tileID == 0) {
         Label startLabel = new Label("Start");
         tilePane.getChildren().add(startLabel);
-        boardGrid.add(tilePane, 0, 10);
+        boardGrid.add(tilePane, 0, maxRow + 1);
       } else { 
         Label label = new Label(String.valueOf(tileID));
         tilePane.getChildren().add(label);
@@ -124,52 +127,54 @@ public class SnakeLadderGUI {
             tilePane.setStyle("-fx-background-color: lightcoral; -fx-border-color: black;");
           }
         }
-        boardGrid.add(tilePane, column, 9 - row);
+        boardGrid.add(tilePane, column, maxRow - row);
       }
     }
     return boardGrid;
   }
 
-    public void updatePlayerList(List<Player> players) {
-      activePlayerListView.getItems().setAll(players);
-    }
+  /* Updates players ListView in sidebar */
+  public void updatePlayerList(List<Player> players) {
+    activePlayerListView.getItems().setAll(players);
+  }
 
-    public void updatePlayerPositions(List<Player> players) {
-      /* Removes player from previous position */
-      for (StackPane pane : tilePanes.values()) {
-        if (pane.getChildren().size() > 1) {
-          pane.getChildren().remove(1, pane.getChildren().size());
-        }
-      }
-
-      /* Add players to tiles */
-      /* Player colors */
-      playerColors.add("red");
-      playerColors.add("blue");
-      playerColors.add("yellow");
-      playerColors.add("green");
-
-      /* Adds color to player markers and places them in each corner of tile */
-      int i = 0;
-      for (Player player : players) {
-        Tile tile = player.getCurrentTile();
-        if (tile != null) {
-          StackPane pane = tilePanes.get(tile.getTileID());
-          if (pane != null) {
-            Color color = Color.web(playerColors.get(i));
-            PlayerMarker marker = new PlayerMarker(player, color);
-            
-            StackPane.setAlignment(marker, switch (i) {
-              case 0 -> Pos.TOP_LEFT;
-              case 1 -> Pos.TOP_RIGHT;
-              case 2 -> Pos.BOTTOM_LEFT;
-              case 3 -> Pos.BOTTOM_RIGHT;
-              default -> Pos.CENTER;
-            });
-            pane.getChildren().add(marker);
-          }
-        }
-        i++;
+  /* Updates player positions visually on the board */
+  public void updatePlayerPositions(List<Player> players) {
+    /* Removes player from previous position */
+    for (StackPane pane : tilePanes.values()) {
+      if (pane.getChildren().size() > 1) {
+        pane.getChildren().remove(1, pane.getChildren().size());
       }
     }
+
+    /* Add players to tiles */
+    /* Player colors */
+    playerColors.add("red");
+    playerColors.add("blue");
+    playerColors.add("yellow");
+    playerColors.add("green");
+
+    /* Adds color to player markers and places them in each corner of tile */
+    int i = 0;
+    for (Player player : players) {
+      Tile tile = player.getCurrentTile();
+      if (tile != null) {
+        StackPane pane = tilePanes.get(tile.getTileID());
+        if (pane != null) {
+          Color color = Color.web(playerColors.get(i));
+          PlayerMarker marker = new PlayerMarker(player, color);
+          
+          StackPane.setAlignment(marker, switch (i) {
+            case 0 -> Pos.TOP_LEFT;
+            case 1 -> Pos.TOP_RIGHT;
+            case 2 -> Pos.BOTTOM_LEFT;
+            case 3 -> Pos.BOTTOM_RIGHT;
+            default -> Pos.CENTER;
+          });
+          pane.getChildren().add(marker);
+        }
+      }
+      i++;
+    }
+  }
 }
